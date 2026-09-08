@@ -1,0 +1,861 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --main-green: #59b889;
+    --light-green: #eefaf4;
+    --dark-green: #3f9b6e;
+
+    --text: #333333;
+    --sub-text: #888888;
+
+    --background: #f8faf9;
+    --white: #ffffff;
+
+    --border: #e5e5e5;
+
+    --star: #f2a93b;
+}
+
+body {
+    font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+
+    background-color: var(--background);
+    color: var(--text);
+
+    min-height: 100vh;
+}
+
+
+/* =========================
+   공통
+========================= */
+
+button {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    width: 100%;
+    background-color: white;
+}
+
+.header-inner {
+    width: 1200px;
+    max-width: calc(100% - 80px);
+
+    height: 120px;
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #dddddd;
+}
+
+
+/* 로고 + 날짜 */
+
+.brand-area {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 18px;
+
+    background-color: var(--main-green);
+    color: white;
+
+    border-radius: 16px;
+
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.today-date {
+    color: #666666;
+
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+/* 헤더 버튼 */
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.header-btn {
+    height: 46px;
+
+    padding: 0 20px;
+
+    background-color: var(--main-green);
+    color: white;
+
+    border-radius: 13px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition: 0.2s;
+}
+
+.header-btn:hover {
+    background-color: var(--dark-green);
+}
+
+.header-btn .icon {
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.header-btn .plus {
+    font-size: 20px;
+    margin-right: 4px;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+    width: 1200px;
+    max-width: calc(100% - 80px);
+
+    margin: 35px auto 70px;
+}
+
+
+/* =========================
+   위쪽 카드
+========================= */
+
+.top-grid {
+    display: grid;
+
+    grid-template-columns: 1.8fr 1fr;
+
+    gap: 35px;
+}
+
+
+/* =========================
+   오늘 메뉴
+========================= */
+
+.today-menu-card {
+    position: relative;
+
+    min-height: 240px;
+
+    padding: 25px 30px;
+
+    background-color: var(--light-green);
+
+    border-radius: 18px;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+
+/* 오늘 메뉴 제목 */
+
+.card-label {
+    display: inline-block;
+
+    padding: 8px 13px;
+
+    background-color: var(--main-green);
+    color: white;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* 메뉴 내용 */
+
+.menu-text {
+    margin-top: 18px;
+
+    padding: 20px 25px;
+
+    min-height: 105px;
+
+    display: flex;
+    align-items: center;
+
+    background-color: white;
+
+    border-radius: 14px;
+
+    font-size: 17px;
+    line-height: 1.6;
+    font-weight: 600;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+
+/* 영양표시 */
+
+.nutrition-link {
+    position: absolute;
+
+    right: 30px;
+    bottom: 25px;
+
+    color: #999999;
+
+    font-size: 11px;
+
+    text-decoration: underline;
+}
+
+
+/* =========================
+   인기 메뉴
+========================= */
+
+.popular-card {
+    min-height: 240px;
+
+    padding: 25px 27px;
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.popular-card h2 {
+    margin-bottom: 18px;
+
+    color: #a8a8a8;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+/* 인기 메뉴 한 줄 */
+
+.popular-item {
+    height: 48px;
+
+    padding: 0 14px;
+
+    margin-bottom: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #f7f8f9;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* 1위 강조 */
+
+.popular-item:first-of-type {
+    background-color: #fff8e8;
+}
+
+.popular-item strong {
+    margin-right: 10px;
+
+    color: #555555;
+}
+
+.popular-score {
+    color: var(--star);
+
+    font-weight: 700;
+}
+
+
+/* 전체 순위 */
+
+.rank-link {
+    display: block;
+
+    margin: 18px 0 0 auto;
+
+    background: transparent;
+
+    color: var(--dark-green);
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.rank-link:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   아래쪽 영역
+========================= */
+
+.bottom-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 50px;
+
+    margin-top: 45px;
+}
+
+
+/* =========================
+   섹션 제목
+========================= */
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.title-wrap {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.green-line {
+    width: 6px;
+    height: 28px;
+
+    display: block;
+
+    background-color: var(--main-green);
+
+    border-radius: 10px;
+}
+
+.title-wrap h2 {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+
+/* =========================
+   정렬 버튼
+========================= */
+
+.sort-buttons {
+    display: flex;
+
+    padding: 3px;
+
+    background-color: #eef0f2;
+
+    border-radius: 8px;
+}
+
+.sort-btn {
+    padding: 6px 10px;
+
+    background-color: transparent;
+
+    color: #999999;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+
+    transition: 0.2s;
+}
+
+
+.sort-btn.active {
+    background-color: white;
+
+    color: #555555;
+
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   리뷰 카드
+========================= */
+
+.review-card {
+    min-height: 68px;
+
+    margin-bottom: 12px;
+
+    padding: 13px 16px;
+
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+
+    column-gap: 15px;
+
+    background-color: white;
+
+    border-radius: 14px;
+
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.07);
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.review-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.1);
+}
+
+
+/* 리뷰 내용 */
+
+.review-text {
+    grid-column: 1;
+
+    color: #555555;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    font-weight: 600;
+}
+
+
+/* 별점 */
+
+.review-rating {
+    grid-column: 2;
+    grid-row: 1 / 3;
+
+    align-self: center;
+
+    padding: 6px 8px;
+
+    background-color: #fff8e8;
+
+    color: var(--star);
+
+    border-radius: 8px;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+}
+
+.review-rating b {
+    margin-left: 3px;
+
+    font-size: 11px;
+}
+
+
+/* 작성자 */
+
+.review-meta {
+    grid-column: 1;
+
+    margin-top: 5px;
+
+    color: #b0b5b8;
+
+    font-size: 9px;
+}
+
+
+/* =========================
+   페이지네이션
+========================= */
+
+.pagination {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: transparent;
+
+    color: #999999;
+
+    font-size: 11px;
+}
+
+.pagination button:hover {
+    color: var(--main-green);
+}
+
+.pagination .current {
+    color: var(--main-green);
+
+    font-weight: 800;
+}
+
+
+/* =========================
+   오늘의 급식
+========================= */
+
+.food-section {
+    padding-left: 45px;
+
+    border-left: 1px solid #d9d9d9;
+}
+
+.food-title {
+    margin-bottom: 20px;
+}
+
+
+/* 급식 사진 */
+
+.meal-photo {
+    width: 100%;
+
+    aspect-ratio: 1.45 / 1;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    background-color: #dddddd;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+
+/*
+    실제 사진이 없을 때 보여주는 영역
+*/
+
+.meal-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d8c6a9,
+            #f0e2ca,
+            #cdbb9d
+        );
+
+    color: white;
+
+    text-align: center;
+}
+
+.meal-placeholder span {
+    font-size: 20px;
+
+    font-weight: 800;
+
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.meal-placeholder small {
+    margin-top: 7px;
+
+    font-size: 10px;
+
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/*
+    JavaScript에서
+
+    reviewModal.classList.add("hidden");
+
+    하면 이 CSS가 적용되어 모달이 사라짐.
+*/
+
+.modal.hidden {
+    display: none;
+}
+
+
+/* 배경 */
+
+.modal-bg {
+    position: absolute;
+
+    inset: 0;
+
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+
+/* 모달 내용 */
+
+.modal-content {
+    position: relative;
+
+    z-index: 2;
+
+    width: 480px;
+    max-width: calc(100% - 40px);
+
+    padding: 28px;
+
+    background-color: white;
+
+    border-radius: 18px;
+
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+}
+
+
+/* 닫기 */
+
+.close-btn {
+    position: absolute;
+
+    top: 15px;
+    right: 20px;
+
+    background: transparent;
+
+    color: #999999;
+
+    font-size: 27px;
+}
+
+.close-btn:hover {
+    color: #444444;
+}
+
+
+/* 모달 제목 */
+
+.modal-label {
+    display: inline-block;
+
+    padding: 7px 12px;
+
+    background-color: var(--light-green);
+
+    color: var(--dark-green);
+
+    border-radius: 15px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.modal-divider {
+    width: 100%;
+
+    height: 1px;
+
+    margin: 15px 0 20px;
+
+    background-color: #eeeeee;
+}
+
+
+/* 작은 제목 */
+
+.small-label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #a8afb3;
+
+    font-size: 8px;
+
+    font-weight: 700;
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+
+    font-size: 19px;
+}
+
+
+/* 별점 */
+
+.modal-rating {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 11px 13px;
+
+    margin-bottom: 17px;
+
+    background-color: #f5f7f8;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+
+    color: #555555;
+}
+
+.modal-rating strong {
+    color: var(--star);
+}
+
+
+/* 리뷰 내용 */
+
+.modal-review {
+    padding: 15px;
+
+    margin-bottom: 15px;
+
+    background-color: #f5f7f8;
+
+    border-radius: 10px;
+
+    color: #555555;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* 날짜 + 작성자 */
+
+.modal-info {
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #aeb4b8;
+
+    font-size: 9px;
+}
+
+
+/* 모달 버튼 */
+
+.modal-actions {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+.modal-actions button {
+    height: 40px;
+
+    border-radius: 9px;
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+/* 수정 */
+
+.edit-btn {
+    background-color: #5ca9dd;
+}
+
+.edit-btn:hover {
+    background-color: #478fbe;
+}
+
+
+/* 삭제 */
+
+.delete-btn {
+    background-color: #df6370;
+}
+
+.delete-btn:hover {
+    background-color: #c94f5c;
+}

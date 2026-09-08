@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>급식어때</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <div class="brand-area">
+            <a href="#" class="logo">급식어때</a>
+            <span class="today-date">2026년 7월 16일 (목)</span>
+        </div>
+
+        <div class="header-actions">
+            <button class="header-btn" id="searchBtn">
+                <span class="icon">⌕</span>
+                메뉴 검색
+            </button>
+            <button class="header-btn" id="writeBtn">
+                <span class="plus">＋</span>
+                리뷰쓰기
+            </button>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- 상단 카드 영역 -->
+    <section class="top-grid">
+
+        <article class="today-menu-card">
+            <span class="card-label">오늘 메뉴</span>
+
+            <p class="menu-text">
+                바비큐폭립, 치즈매쉬포테이토, 랍스터테일구이,
+                리코타치즈샐러드, 수제배추김치, 미역국
+            </p>
+
+            <a href="#" class="nutrition-link">
+                학교급식 식재료 원산지 및 영양표시
+            </a>
+        </article>
+
+        <article class="popular-card">
+            <h2>이번주 최고 인기 메뉴</h2>
+
+            <div class="popular-item">
+                <span><strong>1위</strong> 마라탕</span>
+                <span class="popular-score">★ 4.9</span>
+            </div>
+
+            <div class="popular-item">
+                <span><strong>2위</strong> 치즈닭갈비</span>
+                <span class="popular-score">★ 4.7</span>
+            </div>
+
+            <button class="rank-link" id="rankBtn">
+                전체 순위 보기 →
+            </button>
+        </article>
+
+    </section>
+
+    <!-- 하단 영역 -->
+    <section class="bottom-grid">
+
+        <!-- 리뷰 -->
+        <section class="feedback-section">
+            <div class="section-heading">
+                <div class="title-wrap">
+                    <span class="green-line"></span>
+                    <h2>실시간 급식 피드백</h2>
+                </div>
+
+                <div class="sort-buttons">
+                    <button class="sort-btn active">최신순</button>
+                    <button class="sort-btn">별점 높은순</button>
+                    <button class="sort-btn">오래된 순</button>
+                </div>
+            </div>
+
+            <div id="reviewList">
+
+                <article class="review-card">
+                    <p class="review-text">
+                        치즈가 엄청 꾸덕꾸덕하고 발사믹 소스랑 잘 어울려요!
+                    </p>
+                    <span class="review-rating">★★★★★ <b>4.0</b></span>
+                    <span class="review-meta">작성자: 2407 김희성 · 7분전</span>
+                </article>
+
+                <article class="review-card">
+                    <p class="review-text">
+                        치즈가 엄청 꾸덕꾸덕하고 발사믹 소스랑 잘 어울려요!
+                    </p>
+                    <span class="review-rating">★★★★★ <b>4.0</b></span>
+                    <span class="review-meta">작성자: 2407 김희성 · 7분전</span>
+                </article>
+
+                <article class="review-card">
+                    <p class="review-text">
+                        치즈가 엄청 꾸덕꾸덕하고 발사믹 소스랑 잘 어울려요!
+                    </p>
+                    <span class="review-rating">★★★★★ <b>4.0</b></span>
+                    <span class="review-meta">작성자: 2407 김희성 · 7분전</span>
+                </article>
+
+                <article class="review-card">
+                    <p class="review-text">
+                        치즈가 엄청 꾸덕꾸덕하고 발사믹 소스랑 잘 어울려요!
+                    </p>
+                    <span class="review-rating">★★★★★ <b>4.0</b></span>
+                    <span class="review-meta">작성자: 2407 김희성 · 7분전</span>
+                </article>
+
+            </div>
+
+            <div class="pagination">
+                <button>‹</button>
+                <button class="current">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button>다음 ›</button>
+            </div>
+        </section>
+
+        <!-- 오늘의 급식 -->
+        <section class="food-section">
+            <div class="title-wrap food-title">
+                <span class="green-line"></span>
+                <h2>오늘의 급식</h2>
+            </div>
+
+            <div class="meal-photo">
+                <div class="meal-placeholder">
+                    <span>오늘의 급식 사진</span>
+                    <small>준비 중.</small>
+                </div>
+            </div>
+        </section>
+
+    </section>
+</main>
+
+<!-- 리뷰 상세 모달 -->
+<div class="modal hidden" id="reviewModal">
+    <div class="modal-bg"></div>
+
+    <div class="modal-content">
+        <button class="close-btn" id="closeModal">×</button>
+
+        <span class="modal-label">상세 및 데이터 관리</span>
+
+        <div class="modal-divider"></div>
+
+        <span class="small-label">MENU NAME</span>
+        <h2>랍스터테일구이</h2>
+
+        <div class="modal-rating">
+            <span>★ 별점 평가</span>
+            <strong>★★★★★ 5.0 / 5.0</strong>
+        </div>
+
+        <span class="small-label">REVIEW TEXT</span>
+
+        <div class="modal-review">
+            “급식에 진짜 랍스터가 나오다니 영양사 선생님 최고입니다!
+            너무 맛있고 고급스러운 느낌이에요.”
+        </div>
+
+        <div class="modal-info">
+            <span>2026-07-16 식사 이용</span>
+            <span>작성자: 2406 노가우</span>
+        </div>
+
+        <div class="modal-actions">
+            <button class="edit-btn">리뷰 수정</button>
+            <button class="delete-btn">리뷰 삭제</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
