@@ -93,11 +93,25 @@ function renderReviews(data) {
         card.className = "review-card";
         card.dataset.id = review.id;
 
-        card.innerHTML = `
-            <p class="review-text">${review.text}</p>
-            <span class="review-rating">★ <b>${review.rating.toFixed(1)}</b></span>
-            <span class="review-meta">작성자: ${review.author} · ${review.time}</span>
-        `;
+        const text = document.createElement('p');
+        text.className = 'review-text';
+        text.textContent = review.text;
+        const rating = document.createElement('span');
+        rating.className = 'review-rating';
+        rating.setAttribute('aria-label', `별점 ${review.rating.toFixed(1)}점`);
+        for (let index = 0; index < 5; index++) {
+            const star = document.createElement('img');
+            star.src = index === 4 ? 'assets/figma/star-last.svg' : 'assets/figma/star-review.svg';
+            star.alt = '';
+            rating.appendChild(star);
+        }
+        const score = document.createElement('b');
+        score.textContent = review.rating.toFixed(1);
+        rating.appendChild(score);
+        const meta = document.createElement('span');
+        meta.className = 'review-meta';
+        meta.textContent = `작성자: ${review.author} · ${review.time}`;
+        card.append(text, rating, meta);
 
         card.addEventListener("click", () => openModal(review.id));
         reviewListContainer.appendChild(card);

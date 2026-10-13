@@ -11,6 +11,9 @@
   const photoStatus = document.getElementById('photoStatus');
   const source = document.getElementById('photoSource');
   const board = 'https://www.e-mirim.hs.kr/schoollife/food.do';
+  const dialog = document.getElementById('mealDialog');
+  document.getElementById('mealPicker')?.addEventListener('click', () => dialog.showModal());
+  document.getElementById('closeMealDialog')?.addEventListener('click', () => dialog.close());
   const parts = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
   const part = name => parts.find(item => item.type === name).value;
   dateInput.value = `${part('year')}-${part('month')}-${part('day')}`;
@@ -34,9 +37,11 @@
     const date = dateInput.value;
     const mealName = typeInput.selectedOptions[0].textContent;
     const query = new URLSearchParams({ date, mealType: typeInput.value });
+    const displayDate = new Date(`${date}T12:00:00+09:00`);
+    const weekday = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', weekday: 'short' }).format(displayDate);
     document.getElementById('todayDate').textContent = new Intl.DateTimeFormat('ko-KR', {
-      timeZone: 'Asia/Seoul', year: 'numeric', month: 'long', day: 'numeric', weekday: 'short'
-    }).format(new Date(`${date}T12:00:00+09:00`));
+      timeZone: 'Asia/Seoul', year: 'numeric', month: 'long', day: 'numeric'
+    }).format(displayDate) + ` (${weekday})`;
     menu.textContent = `${mealName} 메뉴를 불러오는 중입니다.`;
     details.hidden = true;
     document.getElementById('mealCalories').textContent = '';
@@ -55,7 +60,7 @@
     await Promise.allSettled([
       request('/api/meal', query, signal).then(({ meal }) => {
         if (current !== generation) return;
-        menu.textContent = meal ? lines(meal.menu) : `${date} ${mealName} 급식 정보가 없습니다.`;
+        menu.textContent = meal ? lines(meal.menu).split('\n').join(', ') : `${date} ${mealName} 급식 정보가 없습니다.`;
         if (!meal) return;
         document.getElementById('mealCalories').textContent = meal.calories || '';
         document.getElementById('mealOrigin').textContent = lines(meal.origin);
@@ -89,7 +94,7 @@
       })
     ]);
   }
-  form.addEventListener('submit', event => { event.preventDefault(); load(); });
+  form.addEventListener('submit', event => { event.preventDefault(); if (!form.reportValidity()) return; dialog?.close(); load(); });
   dateInput.addEventListener('change', load);
   typeInput.addEventListener('change', load);
   load();

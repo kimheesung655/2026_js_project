@@ -7,6 +7,11 @@ const files = { '/': ['index.html', 'text/html'], '/index.html': ['index.html', 
   '/login.html': ['login.html', 'text/html'], '/search.html': ['search.html', 'text/html'],
   '/rank.html': ['rank.html', 'text/html'], '/write.html': ['write.html', 'text/html'],
   '/script.js': ['script.js', 'text/javascript'], '/meal.js': ['meal.js', 'text/javascript'] };
+files['/main-design.css'] = ['main-design.css', 'text/css'];
+for (const asset of ['plus.png', 'search.png', 'star-popular.svg', 'star-second.svg',
+  'star-review.svg', 'star-last.svg', 'divider.svg', 'header-line.svg', 'nutrition-line.svg', 'page-line.svg']) {
+  files[`/assets/figma/${asset}`] = [`assets/figma/${asset}`, asset.endsWith('.svg') ? 'image/svg+xml' : 'image/png'];
+}
 const cache = new Map();
 function send(res, status, data) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });

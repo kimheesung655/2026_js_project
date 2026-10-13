@@ -5,57 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>급식어때</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="main-design.css">
 </head>
-<body>
+<body class="main-page">
 
 <header class="header">
     <div class="header-inner">
         <div class="brand-area">
-            <a href="#" class="logo">급식어때</a>
-            <span class="today-date" id="todayDate"></span>
+            <a href="index.html" class="logo">급식어때</a>
+            <button class="today-date" id="mealPicker" aria-label="급식 날짜와 식사 선택" title="날짜·식사 선택"><span id="todayDate"></span></button>
         </div>
 
         <div class="header-actions">
-            <a href="login.html" class="header-btn">로그인 / 회원가입</a>
             <button class="header-btn" id="searchBtn">
-                <span class="icon">⌕</span>
+                <img class="search-icon" src="assets/figma/search.png" alt="">
                 메뉴 검색
             </button>
             <button class="header-btn" id="writeBtn">
-                <span class="plus">＋</span>
+                <img class="plus-icon" src="assets/figma/plus.png" alt="">
                 리뷰쓰기
             </button>
         </div>
     </div>
+    <div class="header-rule"><img src="assets/figma/header-line.svg" alt=""></div>
 </header>
 
 <main class="container">
-    <nav class="page-links" aria-label="서비스 페이지">
-        <a href="search.html">메뉴 검색 페이지</a>
-        <a href="write.html">리뷰 작성 페이지</a>
-        <a href="rank.html">전체 순위 페이지</a>
-    </nav>
 
     <!-- 상단 카드 영역 -->
     <section class="top-grid">
 
         <article class="today-menu-card">
             <span class="card-label">오늘 메뉴</span>
-            <form class="meal-controls" id="mealForm">
-                <label>날짜 <input type="date" id="mealDate" required></label>
-                <label>식사 <select id="mealType"><option value="1">조식</option><option value="2" selected>중식</option><option value="3">석식</option></select></label>
-                <button type="submit">조회 / 다시 시도</button>
-            </form>
 
             <p class="menu-text" id="mealMenu" aria-live="polite">
                 급식을 불러오는 중입니다.
             </p>
-            <p class="meal-calories" id="mealCalories"></p>
             <details id="mealDetails" hidden>
-                <summary>학교급식 식재료 원산지 및 영양표시</summary>
+                <summary>학교급식 식재료 원산지 및 영양표시제<img src="assets/figma/nutrition-line.svg" alt=""></summary>
+                <div class="nutrition-content">
+                <p class="meal-calories" id="mealCalories"></p>
                 <p>메뉴에 표시된 숫자는 알레르기 유발 식재료 번호입니다.</p>
                 <h3>원산지</h3><p id="mealOrigin"></p>
                 <h3>영양 정보</h3><p id="mealNutrition"></p>
+                </div>
             </details>
         </article>
 
@@ -64,12 +57,12 @@
 
             <div class="popular-item">
                 <span><strong>1위</strong> 마라탕</span>
-                <span class="popular-score">★ 4.9</span>
+                <span class="popular-score"><img src="assets/figma/star-popular.svg" alt="별점">4.9</span>
             </div>
 
             <div class="popular-item">
                 <span><strong>2위</strong> 치즈닭갈비</span>
-                <span class="popular-score">★ 4.7</span>
+                <span class="popular-score"><img src="assets/figma/star-second.svg" alt="별점">4.7</span>
             </div>
 
             <button class="rank-link" id="rankBtn">
@@ -135,7 +128,7 @@
 
             <div class="pagination">
                 <button>‹</button>
-                <button class="current">1</button>
+                <button class="current">1<img src="assets/figma/page-line.svg" alt=""></button>
                 <button>2</button>
                 <button>3</button>
                 <button>4</button>
@@ -145,6 +138,7 @@
 
         <!-- 오늘의 급식 -->
         <section class="food-section">
+            <div class="food-rule"><img src="assets/figma/divider.svg" alt=""></div>
             <div class="title-wrap food-title">
                 <span class="green-line"></span>
                 <h2>오늘의 급식</h2>
@@ -162,6 +156,17 @@
 
     </section>
 </main>
+<footer class="main-footer"><a href="login.html">로그인 / 회원가입</a></footer>
+
+<dialog id="mealDialog" aria-labelledby="mealDialogTitle">
+    <h2 id="mealDialogTitle">급식 날짜·식사 선택</h2>
+    <form class="meal-controls" id="mealForm">
+        <label>날짜 <input type="date" id="mealDate" required></label>
+        <label>식사 <select id="mealType"><option value="1">조식</option><option value="2" selected>중식</option><option value="3">석식</option></select></label>
+        <button type="submit">조회 / 다시 시도</button>
+        <button type="button" id="closeMealDialog">닫기</button>
+    </form>
+</dialog>
 
 <!-- 리뷰 상세 모달 -->
 <div class="modal hidden" id="reviewModal">

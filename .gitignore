@@ -1,5 +1,6 @@
 .codex_tmp/
 node_modules/
+output/
 .env
 .env.*
 !.env.example
