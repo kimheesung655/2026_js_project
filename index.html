@@ -12,7 +12,7 @@
     <div class="header-inner">
         <div class="brand-area">
             <a href="#" class="logo">급식어때</a>
-            <span class="today-date">2026년 7월 16일 (목)</span>
+            <span class="today-date" id="todayDate"></span>
         </div>
 
         <div class="header-actions">
@@ -35,15 +35,22 @@
 
         <article class="today-menu-card">
             <span class="card-label">오늘 메뉴</span>
+            <form class="meal-controls" id="mealForm">
+                <label>날짜 <input type="date" id="mealDate" required></label>
+                <label>식사 <select id="mealType"><option value="1">조식</option><option value="2" selected>중식</option><option value="3">석식</option></select></label>
+                <button type="submit">조회 / 다시 시도</button>
+            </form>
 
-            <p class="menu-text">
-                바비큐폭립, 치즈매쉬포테이토, 랍스터테일구이,
-                리코타치즈샐러드, 수제배추김치, 미역국
+            <p class="menu-text" id="mealMenu" aria-live="polite">
+                급식을 불러오는 중입니다.
             </p>
-
-            <a href="#" class="nutrition-link">
-                학교급식 식재료 원산지 및 영양표시
-            </a>
+            <p class="meal-calories" id="mealCalories"></p>
+            <details id="mealDetails" hidden>
+                <summary>학교급식 식재료 원산지 및 영양표시</summary>
+                <p>메뉴에 표시된 숫자는 알레르기 유발 식재료 번호입니다.</p>
+                <h3>원산지</h3><p id="mealOrigin"></p>
+                <h3>영양 정보</h3><p id="mealNutrition"></p>
+            </details>
         </article>
 
         <article class="popular-card">
@@ -137,12 +144,14 @@
                 <h2>오늘의 급식</h2>
             </div>
 
-            <div class="meal-photo">
-                <div class="meal-placeholder">
-                    <span>오늘의 급식 사진</span>
-                    <small>준비 중.</small>
+            <div class="meal-photo" aria-live="polite">
+                <img id="mealImage" hidden alt="">
+                <div class="meal-placeholder" id="photoPlaceholder">
+                    <span>급식 사진</span>
+                    <small id="photoStatus">불러오는 중입니다.</small>
                 </div>
             </div>
+            <a class="photo-source" id="photoSource" href="https://www.e-mirim.hs.kr/schoollife/food.do" target="_blank" rel="noopener noreferrer">사진 출처: 미림마이스터고 학교급식 게시판 ↗</a>
         </section>
 
     </section>
@@ -187,5 +196,6 @@
 </div>
 
 <script src="script.js"></script>
+<script src="meal.js"></script>
 </body>
 </html>
