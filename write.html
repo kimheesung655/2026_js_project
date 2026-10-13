@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 작성 - 급식어때</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <a href="index.html" class="logo">급식어때</a>
+        <div class="header-actions">
+            <a href="index.html" class="header-btn">취소</a>
+        </div>
+    </div>
+</header>
+
+<main class="container" style="max-width: 600px;">
+    <section class="card">
+        <h2 style="font-size: 22px; margin-bottom: 20px;">오늘의 급식 리뷰 작성</h2>
+        
+        <form onsubmit="submitReview(event)">
+            <div style="margin-bottom: 16px;">
+                <label class="small-label" style="font-size: 13px; margin-bottom: 6px;">메뉴 선택</label>
+                <input type="text" class="auth-input" placeholder="메뉴 이름을 입력하세요 (예: 바비큐폭립)" required>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label class="small-label" style="font-size: 13px; margin-bottom: 6px;">별점 평가</label>
+                <select class="auth-input" style="background: white;" required>
+                    <option value="5.0">★★★★★ (5.0 / 5.0)</option>
+                    <option value="4.0">★★★★☆ (4.0 / 5.0)</option>
+                    <option value="3.0">★★★☆☆ (3.0 / 5.0)</option>
+                    <option value="2.0">★★☆☆☆ (2.0 / 5.0)</option>
+                    <option value="1.0">★☆☆☆☆ (1.0 / 5.0)</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label class="small-label" style="font-size: 13px; margin-bottom: 6px;">리뷰 내용</label>
+                <textarea class="auth-input" style="height: 120px; resize: none;" placeholder="오늘 급식에 대한 솔직한 후기를 작성해주세요..." required></textarea>
+            </div>
+
+            <button type="submit" class="auth-btn">리뷰 등록하기</button>
+        </form>
+    </section>
+</main>
+
+<script>
+    function submitReview(e) {
+        e.preventDefault();
+        alert('리뷰가 성공적으로 등록되었습니다!');
+        location.href = 'index.html';
+    }
+</script>
+
+</body>
+</html>
