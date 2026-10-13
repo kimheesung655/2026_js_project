@@ -32,3 +32,16 @@ Anima의 프로젝트 ZIP 다운로드는 유료 플랜이 필요해 무료로 �
 회원가입 화면에서 참조하는 globals.css 및 전용 레이아웃 스타일도 저장소에 포함되어 있지 않습니다.
 
 검증: `npm test`. 공개 사이트 연결에는 인터넷이 필요합니다.
+
+수업 자료에 맞춘 브라우저 코드:
+- `meal.js`: 수업의 XMLHttpRequest + onload + JSON.parse 방식으로 급식과 사진 조회.
+- 날짜는 Date의 getFullYear/getMonth/getDate/getDay와 padStart로 표시합니다.
+- 화면 요소는 getElementById로 선택하고 onclick/onchange/onsubmit으로 연결합니다.
+- 리뷰 페이지 버튼은 계산된 번호만 innerHTML에 넣으며, 사용자 작성 내용은 textContent로 표시합니다.
+- async/await, Promise, fetch, AbortController, Intl, 선택적 연결(?.), 즉시 실행 함수는 브라우저 코드에서 제거했습니다.
+- 날짜 선택 창은 일반 div와 hidden 속성으로 열고 닫습니다.
+- 현재 날짜는 사용자 컴퓨터의 날짜를 사용합니다. 한국 시간으로 설정한 컴퓨터에서 학교 날짜와 일치합니다.
+
+학교 사진 조회 서버(`server.mjs`, `meal-service.mjs`), 변환 도구(`scripts`), 자동 테스트(`tests`)에는
+수업 자료에 없는 Node.js 기능이 남아 있습니다. 브라우저의 동작 코드와 구분하여 확인해주세요.
+timeout/onerror 같은 요청 오류 처리와 hidden/src/onload 같은 화면 속성은 기능 유지에 필요한 보완입니다.

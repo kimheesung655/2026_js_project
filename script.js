@@ -42,285 +42,119 @@ let reviewData = [
     }
 ];
 
+// 선택한 리뷰와 정렬 기준을 변수로 관리합니다.
 let selectedReviewId = null;
+let activeSort = "최신순";
 
-// 2. DOM 요소 참조
-const reviewListContainer = document.getElementById("reviewList");
-const sortButtons = document.querySelectorAll(".sort-buttons .sort-btn");
-
-// 리뷰 상세 모달
-const reviewModal = document.getElementById("reviewModal");
-const closeModalBtn = document.getElementById("closeModal");
-const modalBg = reviewModal ? reviewModal.querySelector(".modal-bg") : null;
-
-const modalMenuTitle = reviewModal ? reviewModal.querySelector("h2") : null;
-const modalRatingText = reviewModal ? reviewModal.querySelector(".modal-rating strong") : null;
-const modalReviewContent = reviewModal ? reviewModal.querySelector(".modal-review") : null;
-const modalInfoSpans = reviewModal ? reviewModal.querySelectorAll(".modal-info span") : null;
-
-const deleteBtn = reviewModal ? reviewModal.querySelector(".delete-btn") : null;
-const editBtn = reviewModal ? reviewModal.querySelector(".edit-btn") : null;
-
-// 인증 모달
-const authModal = document.getElementById("authModal");
-const loginBtn = document.getElementById("loginBtn");
-const closeAuthModalBtn = document.getElementById("closeAuthModal");
-const authModalBg = document.getElementById("authModalBg");
-
-const loginForm = document.getElementById("loginForm");
-const signupForm = document.getElementById("signupForm");
-const toSignupLink = document.getElementById("toSignup");
-const toLoginLink = document.getElementById("toLogin");
-
-// 기타 버튼
-const homeBtn = document.getElementById("homeBtn");
-const searchBtn = document.getElementById("searchBtn");
-const writeBtn = document.getElementById("writeBtn");
-const rankBtn = document.getElementById("rankBtn");
-
-// 댓글 요소
-const commentInput = document.getElementById("commentInput");
-const addCommentBtn = document.getElementById("addCommentBtn");
-const commentList = document.getElementById("commentList");
-
-// 3. 리뷰 목록 렌더링
-function renderReviews(data) {
-    if (!reviewListContainer) return;
-    reviewListContainer.innerHTML = "";
-
-    data.forEach((review) => {
-        const card = document.createElement("article");
-        card.className = "review-card";
-        card.dataset.id = review.id;
-
-        const text = document.createElement('p');
-        text.className = 'review-text';
-        text.textContent = review.text;
-        const rating = document.createElement('span');
-        rating.className = 'review-rating';
-        rating.setAttribute('aria-label', `별점 ${review.rating.toFixed(1)}점`);
-        for (let index = 0; index < 5; index++) {
-            const star = document.createElement('img');
-            star.src = index === 4 ? 'assets/figma/star-last.svg' : 'assets/figma/star-review.svg';
-            star.alt = '';
-            rating.appendChild(star);
-        }
-        const score = document.createElement('b');
-        score.textContent = review.rating.toFixed(1);
-        rating.appendChild(score);
-        const meta = document.createElement('span');
-        meta.className = 'review-meta';
-        meta.textContent = `작성자: ${review.author} · ${review.time}`;
-        card.append(text, rating, meta);
-
-        card.addEventListener("click", () => openModal(review.id));
-        reviewListContainer.appendChild(card);
-    });
-}
-
-// 4. 정렬
 function sortReviews(sortType) {
-    let sorted = [...reviewData];
-
-    if (sortType === "최신순") {
-        sorted.sort((a, b) => b.createdAt - a.createdAt);
-    } else if (sortType === "별점 높은순") {
+    activeSort = sortType;
+    const sorted = [...reviewData];
+    if (sortType === "별점 높은순") {
         sorted.sort((a, b) => b.rating - a.rating);
     } else if (sortType === "오래된 순") {
         sorted.sort((a, b) => a.createdAt - b.createdAt);
+    } else {
+        sorted.sort((a, b) => b.createdAt - a.createdAt);
     }
-
     renderReviews(sorted);
 }
 
-sortButtons.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-        sortButtons.forEach((b) => b.classList.remove("active"));
-        e.target.classList.add("active");
-        sortReviews(e.target.innerText.trim());
-    });
-});
-
-// 5. 상세 모달 제어
 function openModal(id) {
-    const review = reviewData.find((r) => r.id === id);
-    if (!review || !reviewModal) return;
-
+    const review = reviewData.find(item => item.id === id);
+    if (!review) return;
     selectedReviewId = id;
-    modalMenuTitle.innerText = review.menuName;
-    modalRatingText.innerText = `★★★★★ ${review.rating.toFixed(1)} / 5.0`;
-    modalReviewContent.innerText = `“${review.text}”`;
-    modalInfoSpans[0].innerText = review.date;
-    modalInfoSpans[1].innerText = `작성자: ${review.author}`;
-
-    reviewModal.classList.remove("hidden");
+    document.getElementById("modalMenuTitle").textContent = review.menuName;
+    document.getElementById("modalRatingText").textContent = review.rating.toFixed(1) + " / 5.0";
+    document.getElementById("modalReviewContent").textContent = "“" + review.text + "”";
+    document.getElementById("modalMealDate").textContent = review.date;
+    document.getElementById("modalAuthor").textContent = "작성자: " + review.author;
+    document.getElementById("reviewModal").hidden = false;
 }
 
-function closeModal() {
-    if (reviewModal) reviewModal.classList.add("hidden");
+function closeReviewModal() {
+    document.getElementById("reviewModal").hidden = true;
     selectedReviewId = null;
 }
 
-if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
-if (modalBg) modalBg.addEventListener("click", closeModal);
+function selectReviewSort(id, sortType, left, width) {
+    document.getElementById("sortLatest").className = "text-wrapper-15 sort-btn";
+    document.getElementById("sortRating").className = "text-wrapper-16 sort-btn";
+    document.getElementById("sortOldest").className = "text-wrapper-14 sort-btn";
+    document.getElementById(id).className += " active";
+    document.getElementById("sortHighlight").style.left = left + "px";
+    document.getElementById("sortHighlight").style.width = width + "px";
+    sortReviews(sortType);
+}
 
-// 6. 삭제 & 수정
-if (deleteBtn) {
-    deleteBtn.addEventListener("click", () => {
-        if (selectedReviewId === null) return;
-        if (confirm("정말로 이 리뷰를 삭제하시겠습니까?")) {
-            reviewData = reviewData.filter((r) => r.id !== selectedReviewId);
-            const activeSort = document.querySelector(".sort-btn.active")?.innerText.trim() || "최신순";
-            sortReviews(activeSort);
-            closeModal();
+// id가 있는 요소를 선택하고 onclick에 함수를 넣습니다.
+document.getElementById("sortLatest").onclick = function () {
+    selectReviewSort("sortLatest", "최신순", 4, 56);
+};
+document.getElementById("sortRating").onclick = function () {
+    selectReviewSort("sortRating", "별점 높은순", 68, 83);
+};
+document.getElementById("sortOldest").onclick = function () {
+    selectReviewSort("sortOldest", "오래된 순", 145, 71);
+};
+document.getElementById("closeModal").onclick = closeReviewModal;
+document.getElementById("reviewModalBackground").onclick = closeReviewModal;
+
+document.getElementById("deleteReviewBtn").onclick = function () {
+    if (selectedReviewId === null) return;
+    if (confirm("정말로 이 리뷰를 삭제하시겠습니까?")) {
+        reviewData = reviewData.filter(item => item.id !== selectedReviewId);
+        sortReviews(activeSort);
+        closeReviewModal();
+    }
+};
+document.getElementById("editReviewBtn").onclick = function () {
+    const review = reviewData.find(item => item.id === selectedReviewId);
+    if (!review) return;
+    const text = prompt("수정할 리뷰 내용을 입력하세요:", review.text);
+    if (text && text.trim() !== "") {
+        review.text = text.trim();
+        document.getElementById("modalReviewContent").textContent = "“" + review.text + "”";
+        sortReviews(activeSort);
+    }
+};
+document.getElementById("searchBtn").onclick = function () {
+    const keyword = prompt("검색할 메뉴 이름을 입력하세요:");
+    if (keyword) {
+        renderReviews(reviewData.filter(item => item.menuName.includes(keyword)));
+    }
+};
+document.getElementById("writeBtn").onclick = function () {
+    const menuName = prompt("메뉴 이름을 입력하세요:");
+    if (!menuName || menuName.trim() === "") return;
+    const text = prompt("리뷰 내용을 입력하세요:");
+    if (!text || text.trim() === "") return;
+    const now = new Date();
+    reviewData.unshift({
+        id: now.getTime(),
+        menuName: menuName.trim(),
+        text: text.trim(),
+        rating: 5.0,
+        author: "2407 사용자",
+        time: "방금 전",
+        date: now.getFullYear() + "-" + (now.getMonth() + 1).toString().padStart(2, "0") +
+            "-" + now.getDate().toString().padStart(2, "0") + " 식사 이용",
+        createdAt: now
+    });
+    selectReviewSort("sortLatest", "최신순", 4, 56);
+    alert("리뷰가 등록되었습니다!");
+};
+document.getElementById("rankBtn").onclick = function () {
+    alert("이번주 최고 인기 메뉴 순위:\n1위: 마라탕 (★ 4.9)\n2위: 치즈닭갈비 (★ 4.7)");
+};
+
+// 키보드로도 기존 버튼을 누를 수 있도록 합니다.
+const reviewButtonIds = ["sortLatest", "sortRating", "sortOldest", "searchBtn", "writeBtn", "rankBtn"];
+for (const id of reviewButtonIds) {
+    const button = document.getElementById(id);
+    button.onkeydown = function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            button.onclick();
         }
-    });
+    };
 }
-
-if (editBtn) {
-    editBtn.addEventListener("click", () => {
-        if (selectedReviewId === null) return;
-        const review = reviewData.find((r) => r.id === selectedReviewId);
-        const newText = prompt("수정할 리뷰 내용을 입력하세요:", review.text);
-
-        if (newText && newText.trim() !== "") {
-            review.text = newText.trim();
-            modalReviewContent.innerText = `“${review.text}”`;
-            const activeSort = document.querySelector(".sort-btn.active")?.innerText.trim() || "최신순";
-            sortReviews(activeSort);
-        }
-    });
-}
-
-// 7. 로그인/회원가입 모달
-if (loginBtn) {
-    loginBtn.addEventListener("click", () => {
-        if (loginBtn.innerText === "로그아웃") {
-            alert("로그아웃 되었습니다.");
-            loginBtn.innerText = "로그인";
-            return;
-        }
-        authModal.classList.remove("hidden");
-        loginForm.classList.remove("hidden");
-        signupForm.classList.add("hidden");
-    });
-}
-
-function closeAuthModal() {
-    if (authModal) authModal.classList.add("hidden");
-}
-
-if (closeAuthModalBtn) closeAuthModalBtn.addEventListener("click", closeAuthModal);
-if (authModalBg) authModalBg.addEventListener("click", closeAuthModal);
-
-if (toSignupLink) {
-    toSignupLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        loginForm.classList.add("hidden");
-        signupForm.classList.remove("hidden");
-    });
-}
-
-if (toLoginLink) {
-    toLoginLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        signupForm.classList.add("hidden");
-        loginForm.classList.remove("hidden");
-    });
-}
-
-if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const loginId = document.getElementById("loginId").value;
-        alert(`${loginId}님 환영합니다!`);
-        loginBtn.innerText = "로그아웃";
-        closeAuthModal();
-    });
-}
-
-if (signupForm) {
-    signupForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        alert("회원가입이 완료되었습니다! 로그인해 주세요.");
-        signupForm.classList.add("hidden");
-        loginForm.classList.remove("hidden");
-    });
-}
-
-// 8. 기타 기능
-if (homeBtn) {
-    homeBtn.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-}
-
-if (searchBtn) {
-    searchBtn.addEventListener("click", () => {
-        const keyword = prompt("검색할 메뉴 이름을 입력하세요:");
-        if (keyword) {
-            const filtered = reviewData.filter((r) => r.menuName.includes(keyword));
-            renderReviews(filtered);
-        }
-    });
-}
-
-if (writeBtn) {
-    writeBtn.addEventListener("click", () => {
-        const menuName = prompt("메뉴 이름을 입력하세요:");
-        if (!menuName) return;
-
-        const text = prompt("리뷰 내용을 입력하세요:");
-        if (!text) return;
-
-        const newReview = {
-            id: Date.now(),
-            menuName: menuName,
-            text: text,
-            rating: 5.0,
-            author: "2407 사용자",
-            time: "방금 전",
-            date: "2026-07-16 식사 이용",
-            createdAt: new Date()
-        };
-
-        reviewData.unshift(newReview);
-        sortReviews("최신순");
-        alert("리뷰가 등록되었습니다!");
-    });
-}
-
-if (rankBtn) {
-    rankBtn.addEventListener("click", () => {
-        alert("이번주 최고 인기 메뉴 순위:\n1위: 마라탕 (★ 4.9)\n2위: 치즈닭갈비 (★ 4.7)");
-    });
-}
-
-// 9. 댓글 등록
-if (addCommentBtn && commentInput && commentList) {
-    addCommentBtn.addEventListener("click", () => {
-        const text = commentInput.value.trim();
-        if (!text) {
-            alert("댓글을 입력해주세요.");
-            return;
-        }
-
-        const item = document.createElement("div");
-        item.className = "comment-item";
-        item.innerHTML = `
-            <div class="comment-header">
-                <span class="comment-author">2407 사용자</span>
-                <span class="comment-time">방금 전</span>
-            </div>
-            <div class="comment-body">${text}</div>
-        `;
-
-        commentList.appendChild(item);
-        commentInput.value = "";
-    });
-}
-
-// 초기화
-document.addEventListener("DOMContentLoaded", () => {
-    sortReviews("최신순");
-});

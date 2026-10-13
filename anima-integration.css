@@ -26,8 +26,7 @@
 .element .div-2 button { color: #99a3b6; }
 .element .div-2 .selected-page { color: #4f936c; border-bottom: 1px solid #4f936c; }
 .anima-footer { max-width: 1440px; margin: 24px auto; padding-right: 95px; text-align: right; font-size: 12px; color: #686868; }
-#mealDialog { margin: auto; padding: 28px; width: 440px; max-width: calc(100% - 32px); border: 1px solid #ebeff4; border-radius: 20px; }
-#mealDialog::backdrop { background: #0005; }
+#mealDialog { position: relative; z-index: 2; margin: auto; padding: 28px; width: 440px; max-width: calc(100% - 32px); background: white; border: 1px solid #ebeff4; border-radius: 20px; }
 #mealDialog h2 { font-size: 20px; }
 #mealDialog .meal-controls { flex-direction: column; align-items: stretch; }
 #mealDialog label { display: flex; align-items: center; justify-content: space-between; }
