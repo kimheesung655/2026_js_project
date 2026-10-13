@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 - 급식어때</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="login-container">
+    <header class="header-title">
+        <div class="green-bar"></div>
+        <h1>회원가입 & 로그인</h1>
+    </header>
+
+    <section class="login-card">
+        <h2>로그인</h2>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="text" id="userId" placeholder="아이디를 입력해주세요." required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="password" placeholder="비밀번호를 입력해주세요." required>
+            </div>
+
+            <label class="remember-label">
+                <input type="checkbox" id="rememberLogin" checked>
+                <span>로그인 정보 저장</span>
+            </label>
+
+            <button type="submit" class="submit-btn">로그인</button>
+            <button type="button" class="signup-btn" onclick="location.href='signup.html'">회원가입</button>
+        </form>
+    </section>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메뉴 검색 - 급식어때</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <a href="index.html" class="logo">급식어때</a>
+        <div class="header-actions">
+            <a href="search.html" class="header-btn">⌕ 메뉴 검색</a>
+            <a href="index.html" class="header-btn">메인으로</a>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <section class="card" style="margin-bottom: 24px;">
+        <h2 style="font-size: 20px; margin-bottom: 16px;">급식 메뉴 검색</h2>
+        <div class="comment-input-wrap">
+            <input type="text" id="searchInput" placeholder="검색할 메뉴 이름을 입력하세요 (예: 마라탕, 랍스터)..." style="font-size: 15px; padding: 14px;">
+            <button class="comment-submit-btn" style="height: auto; padding: 0 24px; font-size: 15px;" onclick="searchMenu()">검색</button>
+        </div>
+    </section>
+
+    <section>
+        <h3 style="font-size: 16px; color: var(--text-sub); margin-bottom: 12px;">검색 결과</h3>
+        <div id="searchResultList">
+            <div class="review-card">
+                <div>
+                    <p style="font-weight:600; font-size:15px;">랍스터테일구이</p>
+                    <small style="color:var(--text-sub);">최근 제공일: 2026-07-16 · 평균 별점: ★ 5.0</small>
+                </div>
+                <a href="index.html" class="card-label">리뷰 보기</a>
+            </div>
+            <div class="review-card">
+                <div>
+                    <p style="font-weight:600; font-size:15px;">리코타치즈샐러드</p>
+                    <small style="color:var(--text-sub);">최근 제공일: 2026-07-16 · 평균 별점: ★ 4.0</small>
+                </div>
+                <a href="index.html" class="card-label">리뷰 보기</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    function searchMenu() {
+        const keyword = document.getElementById('searchInput').value.trim();
+        if(!keyword) {
+            alert('검색어를 입력해주세요.');
+            return;
+        }
+        alert(`'${keyword}'에 대한 검색 결과를 불러옵니다.`);
+    }
+</script>
+
+</body>
+</html>

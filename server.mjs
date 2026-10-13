@@ -4,6 +4,8 @@ import { getMeal, getPhoto, validDate, MEAL_NAMES } from './meal-service.mjs';
 
 const files = { '/': ['index.html', 'text/html'], '/index.html': ['index.html', 'text/html'],
   '/signup.html': ['signup.html', 'text/html'], '/style.css': ['style.css', 'text/css'],
+  '/login.html': ['login.html', 'text/html'], '/search.html': ['search.html', 'text/html'],
+  '/rank.html': ['rank.html', 'text/html'], '/write.html': ['write.html', 'text/html'],
   '/script.js': ['script.js', 'text/javascript'], '/meal.js': ['meal.js', 'text/javascript'] };
 const cache = new Map();
 function send(res, status, data) {
