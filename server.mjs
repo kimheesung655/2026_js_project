@@ -1,5 +1,5 @@
 import http from 'node:http';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { getMeal, getPhoto, validDate, MEAL_NAMES } from './meal-service.mjs';
 
 const files = { '/': ['index.html', 'text/html'], '/index.html': ['index.html', 'text/html'],
@@ -8,6 +8,16 @@ const files = { '/': ['index.html', 'text/html'], '/index.html': ['index.html', 
   '/rank.html': ['rank.html', 'text/html'], '/write.html': ['write.html', 'text/html'],
   '/script.js': ['script.js', 'text/javascript'], '/meal.js': ['meal.js', 'text/javascript'] };
 files['/main-design.css'] = ['main-design.css', 'text/css'];
+files['/anima-globals.css'] = ['design-source/anima-main/globals.css', 'text/css'];
+files['/anima-style.css'] = ['design-source/anima-main/style.css', 'text/css'];
+files['/anima-integration.css'] = ['anima-integration.css', 'text/css'];
+files['/anima-review.js'] = ['anima-review.js', 'text/javascript'];
+for (const asset of await readdir(new URL('./design-source/anima-main/img/', import.meta.url))) {
+  if (/^[\w.-]+\.(svg|png)$/.test(asset)) {
+    const assetPath = `design-source/anima-main/img/${asset}`;
+    files[`/${assetPath}`] = [assetPath, asset.endsWith('.svg') ? 'image/svg+xml' : 'image/png'];
+  }
+}
 for (const asset of ['plus.png', 'search.png', 'star-popular.svg', 'star-second.svg',
   'star-review.svg', 'star-last.svg', 'divider.svg', 'header-line.svg', 'nutrition-line.svg', 'page-line.svg']) {
   files[`/assets/figma/${asset}`] = [`assets/figma/${asset}`, asset.endsWith('.svg') ? 'image/svg+xml' : 'image/png'];

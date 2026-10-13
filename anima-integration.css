@@ -1,0 +1,37 @@
+/* Anima 원본 배치를 유지하면서 동적 콘텐츠와 서비스 동작만 보완합니다. */
+[hidden] { display: none !important; }
+.anima-page { background: #f8fafc; }
+.anima-page .element { max-width: 1440px; margin: auto; }
+.anima-page .element button { font-family: inherit; background: transparent; border: 0; padding: 0; }
+.anima-page .element [role="button"] { cursor: pointer; }
+.anima-page .element .sort-buttons { background: none; padding: 0; }
+.anima-page .element .sort-btn { padding: 0; background: none; border-radius: 0; }
+.anima-page .element .sort-btn.active { background: none; box-shadow: none; color: #059669; }
+.anima-page .element .p { height: auto; max-height: 100px; overflow: auto; white-space: normal !important; }
+.anima-page .element .text-wrapper-12 { overflow: hidden; text-overflow: ellipsis; max-width: 283px; white-space: nowrap; }
+.anima-page #mealImage { width: 563px; height: 364px; object-fit: cover; border-radius: 20px; }
+.anima-page #mealPicker { width: 235px; white-space: nowrap; }
+.anima-page .element .text-wrapper-17, .anima-page .element .text-wrapper-18, .anima-page .element .text-wrapper-11 { white-space: nowrap; }
+.anima-page .element .group-4 { width: 380px; border-radius: 15px; }
+.anima-page .element .line-3 { height: 1px; }
+.anima-page .element .line-2 { width: 400px; height: 1px; transform-origin: 0 0; transform: rotate(90deg); }
+#mealDetails summary { color: #b0b7c5; font-size: 14px; }
+.anima-photo-status { position: absolute; top: 618px; left: 768px; width: 563px; height: 364px; background: #edfdf7; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px; text-align: center; color: #586877; }
+.anima-photo-source { position: absolute; top: 987px; left: 768px; width: 563px; text-align: right; font-size: 11px; color: #99a3b6; }
+.element .group-2 summary { cursor: pointer; list-style: none; white-space: nowrap; }
+.element .group-2 summary::-webkit-details-marker { display: none; }
+.nutrition-popup { position: absolute; z-index: 10; top: 30px; left: -500px; width: 700px; padding: 24px; max-height: 400px; overflow: auto; border-radius: 15px; background: white; box-shadow: 0 8px 24px #0002; font-size: 14px; line-height: 1.7; }
+#mealOrigin, #mealNutrition { white-space: pre-line; }
+.element .div-2 { display: flex; gap: 16px; line-height: 1.2; }
+.element .div-2 button { color: #99a3b6; }
+.element .div-2 .selected-page { color: #4f936c; border-bottom: 1px solid #4f936c; }
+.anima-footer { max-width: 1440px; margin: 24px auto; padding-right: 95px; text-align: right; font-size: 12px; color: #686868; }
+#mealDialog { margin: auto; padding: 28px; width: 440px; max-width: calc(100% - 32px); border: 1px solid #ebeff4; border-radius: 20px; }
+#mealDialog::backdrop { background: #0005; }
+#mealDialog h2 { font-size: 20px; }
+#mealDialog .meal-controls { flex-direction: column; align-items: stretch; }
+#mealDialog label { display: flex; align-items: center; justify-content: space-between; }
+@media (max-width: 800px) {
+  /* 원본은 1440px 고정 화면입니다. 작은 화면에서는 가로 스크롤로 원본 배치를 유지합니다. */
+  .anima-page { overflow-x: auto; }
+}
