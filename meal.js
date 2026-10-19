@@ -116,7 +116,7 @@ function loadMeal() {
             const photo = JSON.parse(photoRequest.responseText);
             mealPhotoSource.href = photo.source || schoolPhotoBoard;
             if (!photo.image) {
-                mealPhotoStatus.textContent = "선택한 날짜와 식사의 사진이 아직 게시되지 않았습니다.";
+                mealPhotoStatus.textContent = "급식 사진이 아직 게시되지 않았습니다.";
                 return;
             }
             showMealPhoto(photo.image, date, mealName, requestNumber);
