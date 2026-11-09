@@ -1,60 +1,64 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>리뷰 작성 - 급식어때</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>리뷰 작성 - 급식어때</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap">
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="fg-page">
+<div class="fg-wrap fg-wrap-write">
+    <header>
+        <div class="fg-head"><span class="fg-bar"></span><h1 class="fg-title">새 급식 리뷰 작성</h1></div>
+        <p class="fg-sub">맛있었던 급식이나 아쉬웠던 점을 솔직하게 평가해주세요!</p>
+    </header>
 
-<header class="header">
-    <div class="header-inner">
-        <a href="index.html" class="logo">급식어때</a>
-        <div class="header-actions">
-            <a href="index.html" class="header-btn">취소</a>
-        </div>
-    </div>
-</header>
+    <main class="fg-card fg-write">
+        <form id="reviewForm">
+            <div class="fg-wblock"><label class="fg-wlabel" for="mealDate">급식 이용 날짜</label><input id="mealDate" class="fg-winput" type="date" required></div>
 
-<main class="container" style="max-width: 600px;">
-    <section class="card">
-        <h2 style="font-size: 22px; margin-bottom: 20px;">오늘의 급식 리뷰 작성</h2>
-        
-        <form onsubmit="submitReview(event)">
-            <div style="margin-bottom: 16px;">
-                <label class="small-label" style="font-size: 13px; margin-bottom: 6px;">메뉴 선택</label>
-                <input type="text" class="auth-input" placeholder="메뉴 이름을 입력하세요 (예: 바비큐폭립)" required>
+            <div class="fg-wblock"><label class="fg-wlabel" for="menuName">평가할 급식 메뉴</label><input id="menuName" class="fg-winput" type="text" placeholder="바비큐폭립, 치즈닭갈비" required></div>
+
+            <div class="fg-wblock">
+                <span class="fg-wlabel" id="ratingLabel">별점 평가 (만족도)</span>
+                <input type="hidden" id="rating" value="5">
+                <div class="fg-stars" role="radiogroup" aria-labelledby="ratingLabel">
+                    <button type="button" role="radio" data-score="1" aria-label="1점"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8l3.1 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.6l-6.4 3.6 1.5-7.1L1.7 9.2l7.2-.8z"/></svg></button>
+                    <button type="button" role="radio" data-score="2" aria-label="2점"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8l3.1 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.6l-6.4 3.6 1.5-7.1L1.7 9.2l7.2-.8z"/></svg></button>
+                    <button type="button" role="radio" data-score="3" aria-label="3점"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8l3.1 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.6l-6.4 3.6 1.5-7.1L1.7 9.2l7.2-.8z"/></svg></button>
+                    <button type="button" role="radio" data-score="4" aria-label="4점"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8l3.1 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.6l-6.4 3.6 1.5-7.1L1.7 9.2l7.2-.8z"/></svg></button>
+                    <button type="button" role="radio" data-score="5" aria-label="5점" aria-checked="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8l3.1 6.6 7.2.8-5.4 4.9 1.5 7.1L12 17.6l-6.4 3.6 1.5-7.1L1.7 9.2l7.2-.8z"/></svg></button>
+                    <span class="fg-star-text" id="ratingText">(5점 /아주 맛있어요!)</span>
+                </div>
             </div>
 
-            <div style="margin-bottom: 16px;">
-                <label class="small-label" style="font-size: 13px; margin-bottom: 6px;">별점 평가</label>
-                <select class="auth-input" style="background: white;" required>
-                    <option value="5.0">★★★★★ (5.0 / 5.0)</option>
-                    <option value="4.0">★★★★☆ (4.0 / 5.0)</option>
-                    <option value="3.0">★★★☆☆ (3.0 / 5.0)</option>
-                    <option value="2.0">★★☆☆☆ (2.0 / 5.0)</option>
-                    <option value="1.0">★☆☆☆☆ (1.0 / 5.0)</option>
-                </select>
-            </div>
+            <div class="fg-wblock fg-wblock-tight"><label class="fg-wlabel" for="content">솔직 리뷰 내용</label><textarea id="content" class="fg-winput fg-wtextarea" placeholder="급식 메뉴에 대한 구체적인 만족도나 건의사항을 마음대로 적어주세요." required></textarea></div>
 
-            <div style="margin-bottom: 20px;">
-                <label class="small-label" style="font-size: 13px; margin-bottom: 6px;">리뷰 내용</label>
-                <textarea class="auth-input" style="height: 120px; resize: none;" placeholder="오늘 급식에 대한 후기를 작성해주세요." required></textarea>
+            <p class="form-message" id="formMessage"></p>
+            <div class="fg-write-actions">
+                <a href="index.html" class="fg-cancel">취소</a>
+                <button type="submit" class="fg-submit">리뷰 등록하기</button>
             </div>
-
-            <button type="submit" class="auth-btn">리뷰 등록하기</button>
         </form>
-    </section>
-</main>
-
+    </main>
+</div>
 <script>
-    function submitReview(e) {
-        e.preventDefault();
-        alert('리뷰가 성공적으로 등록되었습니다.');
-        location.href = 'index.html';
-    }
+const ratingWords = ["", "별로예요", "아쉬워요", "보통이에요", "맛있어요", "아주 맛있어요!"];
+const starButtons = document.querySelectorAll(".fg-stars button");
+for (const button of starButtons) {
+    button.onclick = function () {
+        const score = Number(button.dataset.score);
+        document.getElementById("rating").value = score;
+        document.getElementById("ratingText").textContent = "(" + score + "점 /" + ratingWords[score] + ")";
+        for (const star of starButtons) {
+            star.classList.toggle("off", Number(star.dataset.score) > score);
+            star.setAttribute("aria-checked", star === button ? "true" : "false");
+        }
+    };
+}
 </script>
-
+<script src="supabase.js"></script><script src="write.js"></script>
 </body>
 </html>

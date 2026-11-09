@@ -1,32 +1,34 @@
-
-    <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="globals.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>회원가입 - 급식어때</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="screen" ><div class="group" ><div class="rectangle" ></div>
-<div class="text-wrapper" >회원가입 &amp; 로그인</div>
-<div class="div" >검색</div></div>
-<div class="group-2" ></div>
-<div class="text-wrapper-2" >회원가입</div>
-<div class="group-3" ><div class="rectangle-2" ></div>
-<div class="text-wrapper-3" >회원가입</div></div>
-<div class="group-4" ><div class="rectangle-3" ></div>
-<div class="text-wrapper-4" >로그인</div></div>
-<div class="view" ><div class="text-wrapper-5" >이름</div>
-<div class="div-wrapper" ><div class="text-wrapper-6" >이름을 입력해주세요.</div></div></div>
-<div class="view-2" ><div class="text-wrapper-5" >학번</div>
-<div class="div-wrapper" ><div class="text-wrapper-6" >학번을 입력해주세요. (예: 2407)</div></div></div>
-<div class="view-3" ><div class="text-wrapper-5" >학교</div>
-<div class="view-4" ><div class="text-wrapper-7" >미림마이스터고</div></div></div>
-<div class="view-5" ><div class="text-wrapper-5" >비밀번호</div>
-<div class="div-wrapper" ><div class="text-wrapper-6" >비밀번호를 입력해주세요.</div></div></div>
-<div class="view-6" ><div class="text-wrapper-5" >이메일</div>
-<div class="div-wrapper" ><div class="text-wrapper-6" >이메일을 입력해주세요.</div></div></div>
-<div class="view-7" ><div class="text-wrapper-5" >비밀번호 확인</div>
-<div class="div-wrapper" ><div class="text-wrapper-6" >비밀번호를 다시 입력해주세요.</div></div></div></div>
+<body class="fg-page">
+<div class="fg-wrap fg-wrap-auth fg-wrap-signup">
+    <header class="fg-head"><span class="fg-bar"></span><h1 class="fg-title">회원가입 &amp; 로그인</h1></header>
+
+    <main class="fg-card fg-signup">
+        <h2 class="fg-card-title">회원가입</h2>
+        <a href="login.html" class="fg-back fg-back-in" aria-label="로그인으로 돌아가기" title="로그인으로 돌아가기">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M5 12l4 4M5 12l4-4"/></svg>
+        </a>
+        <form id="signupForm">
+            <div class="fg-field fg-half"><label class="fg-label" for="name">이름</label><input class="fg-input" type="text" id="name" placeholder="이름을 입력해주세요." required></div>
+            <div class="fg-field fg-half"><label class="fg-label" for="studentNumber">학번</label><input class="fg-input" type="text" id="studentNumber" placeholder="학번을 입력해주세요. (예: 2407)" required></div>
+            <div class="fg-field"><label class="fg-label" for="school">학교</label><input class="fg-input" type="text" id="school" value="미림마이스터고등학교" readonly></div>
+            <div class="fg-field"><label class="fg-label" for="email">이메일</label><input class="fg-input" type="email" id="email" placeholder="이메일을 입력해주세요." autocomplete="email" required></div>
+            <div class="fg-field"><label class="fg-label" for="password">비밀번호</label><input class="fg-input" type="password" id="password" minlength="6" placeholder="비밀번호를 입력해주세요." autocomplete="new-password" required></div>
+            <div class="fg-field"><label class="fg-label" for="passwordCheck">비밀번호 확인</label><input class="fg-input" type="password" id="passwordCheck" minlength="6" placeholder="비밀번호를 다시 입력해주세요." autocomplete="new-password" required></div>
+            <p class="form-message" id="formMessage"></p>
+            <button type="submit" class="fg-big-btn fg-primary fg-signup-btn">회원가입</button>
+        </form>
+    </main>
+</div>
+<script src="supabase.js"></script><script src="auth.js"></script>
 </body>
+</html>

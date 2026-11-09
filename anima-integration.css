@@ -9,20 +9,20 @@
 .anima-page .element .sort-btn.active { background: none; box-shadow: none; color: #059669; }
 .anima-page .element .p { height: auto; max-height: 100px; overflow: auto; white-space: normal !important; }
 .anima-page .element .text-wrapper-12 { overflow: hidden; text-overflow: ellipsis; max-width: 283px; white-space: nowrap; }
-.anima-page #mealImage { width: 563px; height: 364px; object-fit: cover; border-radius: 20px; }
+.anima-page #mealImage { top: 628px; left: 756px; width: 589px; height: 364px; object-fit: cover; border-radius: 20px; }
 .anima-page #mealPicker { width: 235px; white-space: nowrap; }
 .anima-page .element .text-wrapper-17, .anima-page .element .text-wrapper-18, .anima-page .element .text-wrapper-11 { white-space: nowrap; }
 .anima-page .element .group-4 { width: 380px; border-radius: 15px; }
 .anima-page .element .line-3 { height: 1px; }
 .anima-page .element .line-2 { width: 400px; height: 1px; transform-origin: 0 0; transform: rotate(90deg); }
 #mealDetails summary { color: #b0b7c5; font-size: 14px; }
-.anima-photo-status { position: absolute; top: 618px; left: 768px; width: 563px; height: 364px; background: #edfdf7; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px; text-align: center; color: #586877; }
-.anima-photo-source { position: absolute; top: 987px; left: 768px; width: 563px; text-align: right; font-size: 11px; color: #99a3b6; }
+.anima-photo-status { position: absolute; top: 628px; left: 756px; width: 589px; height: 364px; background: #edfdf7; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px; text-align: center; color: #586877; }
+.anima-photo-source { position: absolute; top: 999px; left: 756px; width: 589px; text-align: right; font-size: 11px; color: #99a3b6; }
 .element .group-2 summary { cursor: pointer; list-style: none; white-space: nowrap; }
 .element .group-2 summary::-webkit-details-marker { display: none; }
 .nutrition-popup { position: absolute; z-index: 10; top: 30px; left: -500px; width: 700px; padding: 24px; max-height: 400px; overflow: auto; border-radius: 15px; background: white; box-shadow: 0 8px 24px #0002; font-size: 14px; line-height: 1.7; }
 #mealOrigin, #mealNutrition { white-space: pre-line; }
-.element .div-2 { display: flex; gap: 16px; line-height: 1.2; }
+.element .div-2 { left: 54px; width: 600px; display: flex; justify-content: center; gap: 16px; line-height: 1.2; }
 .element .div-2 button { color: #99a3b6; }
 .element .div-2 .selected-page { color: #4f936c; border-bottom: 1px solid #4f936c; }
 .anima-footer { max-width: 1440px; margin: 24px auto; padding-right: 95px; text-align: right; font-size: 12px; color: #686868; }
@@ -30,6 +30,47 @@
 #mealDialog h2 { font-size: 20px; }
 #mealDialog .meal-controls { flex-direction: column; align-items: stretch; }
 #mealDialog label { display: flex; align-items: center; justify-content: space-between; }
+
+/* ===== 간격 · 대칭 보정: 화면 좌우 기준선을 54px ~ 1345px로 통일 ===== */
+/* 헤더: 로고 박스와 구분선을 카드 왼쪽 선(54px)에 맞춤 */
+.anima-page .element .frame { left: 41px; }
+.anima-page .element .line-3 { left: 54px; width: 1291px; }
+
+/* 인기 메뉴 카드: 좌우 여백 40px로 대칭, 순위·점수·별을 각 줄 세로 가운데에 정렬 */
+.anima-page .element .text-wrapper-5 { left: 40px; width: auto; text-align: left; }
+.anima-page .element .rectangle-4 { left: 40px; }
+.anima-page .element .rectangle-5 { left: 40px; }
+.anima-page .element .text-wrapper-6,
+.anima-page .element .text-wrapper-7 { left: 56px; width: auto; justify-content: flex-start; white-space: nowrap; }
+.anima-page .element .text-wrapper-6 { top: 88px; }
+.anima-page .element .text-wrapper-7 { top: 156px; }
+.anima-page .element .text-wrapper-9,
+.anima-page .element .text-wrapper-10 { left: 290px; width: 34px; height: 25px; display: flex; align-items: center; justify-content: flex-end; white-space: nowrap; }
+.anima-page .element .text-wrapper-9 { top: 88px; }
+.anima-page .element .text-wrapper-10 { top: 156px; }
+.anima-page .element .star { left: 276px; top: 95px; }
+.anima-page .element .img { left: 276px; top: 163px; }
+.anima-page .element .text-wrapper-8 { left: 240px; width: 100px; text-align: right; white-space: nowrap; }
+
+/* 실시간 급식 피드백: 제목·정렬 필터·카드·페이지 번호를 같은 기준선에 맞춤 */
+.anima-page .element .frame-9 { top: 556px; left: 64px; }
+.anima-page .element .frame-4,
+.anima-page .element .frame-5,
+.anima-page .element .frame-6,
+.anima-page .element .frame-7 { left: 54px; }
+.anima-page .element .text-wrapper-11 { left: 400px; width: 183px; text-align: right; }
+.anima-page .element .frame-8 { top: 559px; left: 434px; min-width: 0; }
+.anima-page .element .group-7,
+.anima-page .element .group-8 { width: 220px; }
+.anima-page .element .rectangle-9 { top: 4px; height: 27px; transition: left .2s, width .2s; }
+.anima-page .element .sort-btn { top: 0; height: 35px; line-height: 35px; text-align: center; font-size: 13px; z-index: 1; }
+.anima-page #sortLatest { left: 4px; width: 56px; }
+.anima-page #sortRating { left: 60px; width: 84px; }
+.anima-page #sortOldest { left: 144px; width: 72px; }
+.anima-page .element .vector { display: none; }
+
+/* 오늘의 급식: 제목 높이를 피드백 제목과 맞추고, 사진과 같은 왼쪽 선에서 시작 */
+.anima-page .element .frame-10 { top: 556px; left: 756px; }
 @media (max-width: 800px) {
   /* 원본은 1440px 고정 화면입니다. 작은 화면에서는 가로 스크롤로 원본 배치를 유지합니다. */
   .anima-page { overflow-x: auto; }

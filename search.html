@@ -1,63 +1,145 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메뉴 검색 - 급식어때</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>메뉴 검색 - 급식어때</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap">
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-
-<header class="header">
-    <div class="header-inner">
-        <a href="index.html" class="logo">급식어때</a>
-        <div class="header-actions">
-            <a href="search.html" class="header-btn">⌕ 메뉴 검색</a>
-            <a href="index.html" class="header-btn">메인으로</a>
-        </div>
-    </div>
-</header>
-
-<main class="container">
-    <section class="card" style="margin-bottom: 24px;">
-        <h2 style="font-size: 20px; margin-bottom: 16px;">급식 메뉴 검색</h2>
-        <div class="comment-input-wrap">
-            <input type="text" id="searchInput" placeholder="검색할 메뉴 이름을 입력하세요 (예: 마라탕, 랍스터)" style="font-size: 15px; padding: 14px;">
-            <button class="comment-submit-btn" style="height: auto; padding: 0 24px; font-size: 15px;" onclick="searchMenu()">검색</button>
-        </div>
-    </section>
-
-    <section>
-        <h3 style="font-size: 16px; color: var(--text-sub); margin-bottom: 12px;">검색 결과</h3>
-        <div id="searchResultList">
-            <div class="review-card">
-                <div>
-                    <p style="font-weight:600; font-size:15px;">랍스터테일구이</p>
-                    <small style="color:var(--text-sub);">최근 제공일: 2026-07-16 · 평균 별점: ★ 5.0</small>
-                </div>
-                <a href="index.html" class="card-label">리뷰 보기</a>
+<body class="fg-page">
+<div class="fg-wrap fg-search-page">
+    <header>
+        <div class="fg-head"><span class="fg-bar"></span><h1 class="fg-title">메뉴별 리뷰 검색</h1></div>
+        <p class="fg-sub">원하는 급식 메뉴를 검색하면 해당 메뉴의 리뷰와 통계를 볼 수 있습니다.</p>
+        <form class="fg-search-bar" id="searchForm" role="search">
+            <div class="fg-search-field">
+                <label class="fg-sr" for="searchInput">검색할 메뉴 이름</label>
+                <input type="search" id="searchInput" placeholder="메뉴 이름을 입력하세요 (예: 마라탕)" autocomplete="off">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="10" cy="10" r="6.5"/><path d="M15 15l5.5 5.5"/></svg>
             </div>
-            <div class="review-card">
-                <div>
-                    <p style="font-weight:600; font-size:15px;">리코타치즈샐러드</p>
-                    <small style="color:var(--text-sub);">최근 제공일: 2026-07-16 · 평균 별점: ★ 4.0</small>
-                </div>
-                <a href="index.html" class="card-label">리뷰 보기</a>
-            </div>
-        </div>
-    </section>
-</main>
+            <button type="submit" class="fg-search-btn">검색</button>
+        </form>
+    </header>
+    <a href="index.html" class="fg-back fg-back-search" aria-label="메인으로" title="메인으로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M5 12l4 4M5 12l4-4"/></svg>
+    </a>
 
+    <main>
+        <section class="fg-result-head" aria-live="polite">
+            <div>
+                <h3 id="resultTitle">메뉴를 검색해 보세요</h3>
+                <p class="fg-result-count" id="resultCount">메뉴 이름을 입력하면 미림 학생들이 남긴 리뷰를 모아 보여드려요.</p>
+            </div>
+            <div class="fg-avg" id="resultAverage" hidden>
+                <strong id="averageNumber">0.0</strong>
+                <div>
+                    <span class="fg-meter" id="averageStars" style="--score: 0"><span>★★★★★</span></span>
+                    <small>평균 별점</small>
+                </div>
+            </div>
+        </section>
+        <div class="fg-result-list" id="searchResultList"></div>
+    </main>
+</div>
+
+<script src="supabase.js"></script>
 <script>
-    function searchMenu() {
-        const keyword = document.getElementById('searchInput').value.trim();
-        if(!keyword) {
-            alert('검색어를 입력해주세요.');
+    const searchInput = document.getElementById("searchInput");
+
+    function setStars(element, rating) {
+        element.style.setProperty("--score", Math.max(0, Math.min(5, rating)) / 5);
+        element.setAttribute("aria-label", "별점 " + rating.toFixed(1) + "점");
+    }
+
+    function reviewCard(row) {
+        const profile = row.profiles || {};
+        const author = (profile.student_number ? profile.student_number + " " : "") + (profile.name || "사용자");
+        const rating = Number(row.rating);
+
+        const card = document.createElement("article");
+        card.className = "fg-result";
+        const body = document.createElement("div");
+        const meta = document.createElement("small");
+        meta.className = "fg-result-meta";
+        meta.textContent = author + " " + row.meal_date + " " + (row.meal_type || "") + " 작성";
+        const menu = document.createElement("p");
+        menu.className = "fg-result-menu";
+        menu.textContent = row.menu_name;
+        const text = document.createElement("p");
+        text.className = "fg-result-name";
+        text.textContent = row.content;
+        body.append(meta, menu, text);
+
+        const pill = document.createElement("span");
+        pill.className = "fg-pill";
+        const stars = document.createElement("span");
+        stars.className = "fg-meter";
+        stars.innerHTML = "<span>★★★★★</span>";
+        setStars(stars, rating);
+        const number = document.createElement("span");
+        number.textContent = rating.toFixed(1);
+        pill.append(stars, number);
+
+        card.append(body, pill);
+        return card;
+    }
+
+    function showResults(keyword, rows) {
+        const list = document.getElementById("searchResultList");
+        list.innerHTML = "";
+        document.getElementById("resultTitle").textContent = "“" + keyword + "” 검색 결과";
+        if (!rows.length) {
+            document.getElementById("resultCount").textContent = "아직 이 메뉴에 작성된 리뷰가 없습니다.";
+            document.getElementById("resultAverage").hidden = true;
             return;
         }
-        alert(`'${keyword}'에 대한 검색 결과를 불러옵니다.`);
+        const writers = new Set(rows.map(row => row.user_id)).size;
+        const average = rows.reduce((sum, row) => sum + Number(row.rating), 0) / rows.length;
+        document.getElementById("resultCount").textContent = "총 " + writers + "명의 미림 학생들이 평가를 작성했습니다. (리뷰 " + rows.length + "개)";
+        document.getElementById("averageNumber").textContent = average.toFixed(1);
+        setStars(document.getElementById("averageStars"), average);
+        document.getElementById("resultAverage").hidden = false;
+        for (const row of rows) list.append(reviewCard(row));
+    }
+
+    function searchMenu() {
+        const keyword = searchInput.value.trim();
+        if (!keyword) {
+            alert("검색어를 입력해주세요.");
+            searchInput.focus();
+            return;
+        }
+        history.replaceState(null, "", "search.html?q=" + encodeURIComponent(keyword));
+        document.getElementById("resultTitle").textContent = "“" + keyword + "” 검색 중...";
+        document.getElementById("resultCount").textContent = "리뷰를 불러오고 있습니다.";
+        document.getElementById("resultAverage").hidden = true;
+        const pattern = encodeURIComponent("*" + keyword.replace(/[*,()]/g, " ") + "*");
+        const fields = "id,user_id,menu_name,rating,content,meal_date,meal_type,created_at,profiles(name,student_number)";
+        supabaseRequest("/rest/v1/reviews?select=" + fields + "&menu_name=ilike." + pattern + "&order=created_at.desc", "GET", null, false, function (error, rows) {
+            if (error) {
+                document.getElementById("resultTitle").textContent = "검색하지 못했습니다";
+                document.getElementById("resultCount").textContent = error;
+                document.getElementById("searchResultList").innerHTML = "";
+                return;
+            }
+            showResults(keyword, rows || []);
+        });
+    }
+
+    document.getElementById("searchForm").onsubmit = function (event) {
+        event.preventDefault();
+        searchMenu();
+    };
+
+    const startKeyword = new URLSearchParams(location.search).get("q");
+    if (startKeyword) {
+        searchInput.value = startKeyword;
+        searchMenu();
+    } else {
+        searchInput.focus();
     }
 </script>
-
 </body>
 </html>

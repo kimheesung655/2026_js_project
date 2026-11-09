@@ -1,52 +1,53 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>인기 메뉴 순위 - 급식어때</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>인기 메뉴 순위 - 급식어때</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap">
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="fg-page">
+<div class="fg-wrap">
+    <header>
+        <div class="fg-head"><span class="fg-bar"></span><h1 class="fg-title">인기 급식 메뉴 TOP 5</h1></div>
+        <p class="fg-sub">등록된 모든 리뷰의 평균 별점과 리뷰 수를 계산한 급식 랭킹입니다.</p>
+    </header>
+    <a href="index.html" class="fg-back" aria-label="메인으로" title="메인으로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M5 12l4 4M5 12l4-4"/></svg>
+    </a>
 
-<header class="header">
-    <div class="header-inner">
-        <a href="index.html" class="logo">급식어때</a>
-        <div class="header-actions">
-            <a href="index.html" class="header-btn">메인으로</a>
+    <p class="fg-rank-status" id="rankStatus">리뷰를 계산하고 있습니다.</p>
+    <main class="fg-rank-list" id="rankList">
+        <div class="fg-rank gold" id="rankItem0">
+            <span class="fg-rank-no">1위</span>
+            <div><p class="fg-rank-name" id="rankName0"></p><p class="fg-rank-meta" id="rankMeta0"></p></div>
+            <span class="fg-rank-score"><span>★</span><b id="rankScore0"></b></span>
         </div>
-    </div>
-</header>
-
-<main class="container" style="max-width: 800px;">
-    <section class="card">
-        <h2 style="font-size: 22px; margin-bottom: 20px;">이번 주 최고 인기 메뉴 순위</h2>
-        
-        <div class="popular-item" style="padding: 16px; margin-bottom: 12px; font-size: 16px;">
-            <span><strong style="color: #d97706; margin-right: 10px;">1위</strong> 마라탕</span>
-            <span class="popular-score" style="font-size: 16px;">★ 4.9</span>
+        <div class="fg-rank silver" id="rankItem1">
+            <span class="fg-rank-no">2위</span>
+            <div><p class="fg-rank-name" id="rankName1"></p><p class="fg-rank-meta" id="rankMeta1"></p></div>
+            <span class="fg-rank-score"><span>★</span><b id="rankScore1"></b></span>
         </div>
-
-        <div class="popular-item" style="padding: 16px; margin-bottom: 12px; font-size: 16px; background: #f8fafc;">
-            <span><strong style="color: #64748b; margin-right: 10px;">2위</strong> 치즈닭갈비</span>
-            <span class="popular-score" style="font-size: 16px;">★ 4.7</span>
+        <div class="fg-rank bronze" id="rankItem2">
+            <span class="fg-rank-no">3위</span>
+            <div><p class="fg-rank-name" id="rankName2"></p><p class="fg-rank-meta" id="rankMeta2"></p></div>
+            <span class="fg-rank-score"><span>★</span><b id="rankScore2"></b></span>
         </div>
-
-        <div class="popular-item" style="padding: 16px; margin-bottom: 12px; font-size: 16px; background: #f8fafc;">
-            <span><strong style="color: #b45309; margin-right: 10px;">3위</strong> 랍스터테일구이</span>
-            <span class="popular-score" style="font-size: 16px;">★ 4.5</span>
+        <div class="fg-rank" id="rankItem3">
+            <span class="fg-rank-no">4위</span>
+            <div><p class="fg-rank-name" id="rankName3"></p><p class="fg-rank-meta" id="rankMeta3"></p></div>
+            <span class="fg-rank-score"><span>★</span><b id="rankScore3"></b></span>
         </div>
-
-        <div class="popular-item" style="padding: 16px; margin-bottom: 12px; font-size: 16px; background: #f8fafc;">
-            <span><strong style="color: var(--text-sub); margin-right: 10px;">4위</strong> 바비큐폭립</span>
-            <span class="popular-score" style="font-size: 16px;">★ 4.3</span>
+        <div class="fg-rank" id="rankItem4">
+            <span class="fg-rank-no">5위</span>
+            <div><p class="fg-rank-name" id="rankName4"></p><p class="fg-rank-meta" id="rankMeta4"></p></div>
+            <span class="fg-rank-score"><span>★</span><b id="rankScore4"></b></span>
         </div>
-
-        <div class="popular-item" style="padding: 16px; font-size: 16px; background: #f8fafc;">
-            <span><strong style="color: var(--text-sub); margin-right: 10px;">5위</strong> 리코타치즈샐러드</span>
-            <span class="popular-score" style="font-size: 16px;">★ 4.0</span>
-        </div>
-    </section>
-</main>
-
+    </main>
+</div>
+<script src="supabase.js"></script>
+<script src="rank.js"></script>
 </body>
 </html>

@@ -1,12 +1,21 @@
 import http from 'node:http';
 import { readFile, readdir } from 'node:fs/promises';
+import { loadEnvFile } from 'node:process';
 import { getMeal, getPhoto, validDate, MEAL_NAMES } from './meal-service.mjs';
+
+try {
+  loadEnvFile();
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+}
 
 const files = { '/': ['index.html', 'text/html'], '/index.html': ['index.html', 'text/html'],
   '/signup.html': ['signup.html', 'text/html'], '/style.css': ['style.css', 'text/css'],
   '/login.html': ['login.html', 'text/html'], '/search.html': ['search.html', 'text/html'],
   '/rank.html': ['rank.html', 'text/html'], '/write.html': ['write.html', 'text/html'],
-  '/script.js': ['script.js', 'text/javascript'], '/meal.js': ['meal.js', 'text/javascript'] };
+  '/script.js': ['script.js', 'text/javascript'], '/meal.js': ['meal.js', 'text/javascript'],
+  '/supabase.js': ['supabase.js', 'text/javascript'], '/auth.js': ['auth.js', 'text/javascript'],
+  '/write.js': ['write.js', 'text/javascript'], '/rank.js': ['rank.js', 'text/javascript'] };
 files['/main-design.css'] = ['main-design.css', 'text/css'];
 files['/anima-globals.css'] = ['design-source/anima-main/globals.css', 'text/css'];
 files['/anima-style.css'] = ['design-source/anima-main/style.css', 'text/css'];
@@ -31,6 +40,12 @@ const server = http.createServer(async (req, res) => {
   try {
     if (req.method !== 'GET') return send(res, 405, { error: 'GET 요청만 가능합니다.' });
     const url = new URL(req.url, 'http://localhost');
+    if (url.pathname === '/api/config') {
+      const supabaseUrl = process.env.SUPABASE_URL || '';
+      const supabaseKey = process.env.SUPABASE_PUBLISHABLE_KEY || '';
+      if (!supabaseUrl || !supabaseKey) return send(res, 503, { error: '.env에 Supabase 설정이 필요합니다.' });
+      return send(res, 200, { supabaseUrl, supabaseKey });
+    }
     if (url.pathname === '/api/meal' || url.pathname === '/api/photo') {
       const date = url.searchParams.get('date') || '';
       const mealType = url.searchParams.get('mealType') || '2';
@@ -53,4 +68,5 @@ const server = http.createServer(async (req, res) => {
     send(res, 502, { error: '외부 정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.' });
   }
 });
-server.listen(Number(process.env.PORT || 3000), '127.0.0.1', () => console.log('급식어때: http://localhost:3000'));
+const port = Number(process.env.PORT || 3000);
+server.listen(port, '127.0.0.1', () => console.log(`급식어때: http://localhost:${port}`));

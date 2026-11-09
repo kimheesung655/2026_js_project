@@ -395,39 +395,46 @@ a {
 .modal-content {
     position: relative;
     z-index: 2;
-    width: 480px;
+    width: 549px;
     max-width: calc(100% - 32px);
     max-height: 90vh;
     overflow-y: auto;
-    padding: 28px;
+    padding: 34px 35px 35px 34px;
     background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-radius: 30px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    font-weight: 700;
 }
 
 .close-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    color: var(--text-muted);
-    font-size: 24px;
+    top: 30px;
+    right: 33px;
+    width: 30px;
+    height: 30px;
+    color: #586877;
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 30px;
 }
 
 .modal-label {
-    display: inline-block;
-    padding: 6px 12px;
-    background-color: var(--light-green);
-    color: var(--dark-green);
-    border-radius: 8px;
-    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    height: 42px;
+    padding: 0 25px;
+    background-color: #ecfdf5;
+    color: #1a9e71;
+    border-radius: 20px;
+    font-size: 16px;
     font-weight: 700;
 }
 
 .modal-divider {
     width: 100%;
     height: 1px;
-    margin: 16px 0;
-    background-color: var(--border);
+    margin: 22px 0 15px;
+    background-color: #f1f5f9;
 }
 
 .small-label {
@@ -438,61 +445,80 @@ a {
     font-weight: 700;
 }
 
+.modal-content .small-label {
+    margin: 0 0 6px 9px;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
 .modal-content h2 {
-    margin-bottom: 16px;
+    margin: 0 0 17px 9px;
+    color: #000;
     font-size: 20px;
+    font-weight: 700;
 }
 
 .modal-rating {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
-    margin-bottom: 16px;
-    background-color: #f8fafc;
+    height: 45px;
+    padding: 0 20px 0 12px;
+    margin: 0 0 17px 9px;
+    background-color: #f1f5f9;
     border-radius: 10px;
-    font-size: 13px;
+    color: #586877;
+    font-size: 12px;
+}
+
+.modal-rating span::first-letter {
+    color: var(--star);
 }
 
 .modal-rating strong {
     color: var(--star);
+    font-size: 12px;
 }
 
 .modal-review {
-    padding: 16px;
-    margin-bottom: 16px;
-    background-color: #f8fafc;
+    min-height: 94px;
+    padding: 15px 16px;
+    margin: 0 0 18px 9px;
+    background-color: #f1f5f9;
     border-radius: 10px;
-    font-size: 14px;
-    line-height: 1.6;
+    color: #586877;
+    font-size: 12px;
+    line-height: 18px;
 }
 
 .modal-info {
     display: flex;
     justify-content: space-between;
-    color: var(--text-muted);
+    padding: 0 6px 15px 8px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #cfd0da;
     font-size: 12px;
 }
 
 .modal-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 7px;
+    margin: 18px -9px 0 2px;
 }
 
 .modal-actions button {
-    height: 42px;
+    height: 36px;
     border-radius: 10px;
     color: white;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
 }
 
-.edit-btn { background-color: #3b82f6; }
-.edit-btn:hover { background-color: #2563eb; }
-.delete-btn { background-color: #ef4444; }
-.delete-btn:hover { background-color: #dc2626; }
+.edit-btn { background-color: #0ea5e9; }
+.edit-btn:hover { background-color: #0284c7; }
+.delete-btn { background-color: #f43f5e; }
+.delete-btn:hover { background-color: #e11d48; }
 
 /* COMMENTS & AUTH INPUTS */
 .comment-input-wrap {
@@ -559,6 +585,18 @@ a {
     font-weight: bold;
 }
 
+.auth-page { width: 440px; max-width: calc(100% - 32px); margin: 50px auto; }
+.auth-card { padding: 32px; background: white; border-radius: 20px; box-shadow: 0 6px 24px rgba(15, 23, 42, 0.08); }
+.auth-card h1 { margin-bottom: 8px; }
+.auth-description { margin-bottom: 24px; color: var(--text-sub); font-size: 14px; }
+.auth-label { margin-top: 16px; }
+.remember-label { display: block; margin-top: 14px; color: var(--text-sub); font-size: 13px; }
+.auth-submit { width: 100%; margin-top: 18px; }
+.form-message { min-height: 20px; margin-top: 14px; font-size: 13px; }
+.form-message.error { color: #dc2626; }
+.form-message.success { color: var(--dark-green); }
+.review-textarea { height: 120px; resize: vertical; }
+
 [hidden] { display: none !important; }
 .page-links { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; color: var(--dark-green); font-size: 13px; }
 .page-links a { text-decoration: underline; }
@@ -581,4 +619,163 @@ a {
   .top-grid, .bottom-grid { grid-template-columns: 1fr; gap: 24px; }
   .food-section { padding-left: 0; border-left: 0; }
   .section-heading { flex-wrap: wrap; gap: 12px; }
+}
+
+/* ===== Figma 하위 페이지 디자인 (로그인 · 회원가입 · 리뷰쓰기 · 순위 · 검색) ===== */
+.fg-page { font-family: "Noto Sans KR", "Pretendard", -apple-system, system-ui, sans-serif; background: #f8fafc; color: #2a2a2a; }
+.fg-page button, .fg-page input, .fg-page textarea { font-family: inherit; }
+.fg-wrap { position: relative; max-width: 1440px; margin: 0 auto; padding: 113px 53px 80px; }
+.fg-wrap-auth { padding-top: 37px; }
+.fg-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.fg-head { display: flex; align-items: center; gap: 18px; }
+.fg-bar { flex: none; width: 10px; height: 40px; border-radius: 20px; background: #10b981; }
+.fg-title { font-size: 24px; font-weight: 700; color: #2a2a2a; }
+.fg-sub { margin-top: 15px; font-size: 12px; font-weight: 700; color: #586877; }
+
+.fg-back { position: absolute; top: 110px; right: 122px; width: 65px; height: 60px; border-radius: 20px; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; transition: background .2s; }
+.fg-back:hover { background: #059669; }
+.fg-back svg { width: 40px; height: 40px; }
+
+.fg-card { position: relative; width: 1000px; max-width: 100%; margin: 0 auto; background: white; border-radius: 30px; box-shadow: 0 4px 4px rgba(0, 0, 0, .25); }
+
+/* 로그인 */
+.fg-login { margin-top: 85px; padding: 23px 97px 24px; }
+.fg-card-title { text-align: center; font-size: 48px; line-height: 58px; font-weight: 700; color: #000; }
+.fg-login form { margin-top: 51px; }
+.fg-box-input { display: block; width: 100%; height: 92px; padding: 0 35px; margin-bottom: 25px; background: #f1f5f9; border: 1px solid #8b879d; border-radius: 0; font-size: 24px; font-weight: 700; color: #1e2940; outline: none; }
+.fg-box-input::placeholder { color: #bebecb; }
+.fg-box-input:focus { border-color: #10b981; }
+.fg-check { display: inline-flex; align-items: center; gap: 25px; font-size: 24px; font-weight: 700; color: #000; cursor: pointer; }
+.fg-check input { position: absolute; opacity: 0; pointer-events: none; }
+.fg-check-box { width: 35px; height: 35px; border-radius: 5px; background: #e2e8f0; color: white; display: flex; align-items: center; justify-content: center; }
+.fg-check-box svg { width: 24px; height: 24px; visibility: hidden; }
+.fg-check input:checked + .fg-check-box { background: #10b981; }
+.fg-check input:checked + .fg-check-box svg { visibility: visible; }
+.fg-check input:focus-visible + .fg-check-box { outline: 2px solid #059669; outline-offset: 2px; }
+.fg-login .form-message { min-height: 22px; margin: 30px 0 17px; font-size: 15px; }
+.fg-big-btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 92px; border: 1px solid #8b879d; font-size: 48px; font-weight: 700; }
+.fg-primary { background: #10b981; color: white; }
+.fg-primary:hover { background: #059669; }
+.fg-secondary { margin-top: 22px; background: #f1f5f9; color: #000; }
+.fg-secondary:hover { background: #e2e8f0; }
+
+/* 회원가입 */
+.fg-wrap-signup { padding-top: 15px; }
+.fg-signup { margin-top: 32px; padding: 32px 61px 60px 49px; }
+.fg-signup .fg-card-title { padding-left: 12px; }
+.fg-back-in { top: 42px; right: 61px; }
+.fg-signup form { margin-top: 18px; display: grid; grid-template-columns: 384px 1fr; column-gap: 97px; }
+.fg-field { grid-column: 1 / -1; margin-bottom: 18px; }
+.fg-field.fg-half { grid-column: auto; }
+.fg-label { display: block; margin-bottom: 7px; font-size: 20px; line-height: 24px; font-weight: 700; color: #101010; }
+.fg-input { display: block; width: 100%; height: 61px; padding: 0 22px; background: #f1f5f9; border: 1px solid #a5a3be; border-radius: 4px; font-size: 20px; font-weight: 700; color: #1e2940; outline: none; }
+.fg-input::placeholder { color: #b0b2c1; }
+.fg-input:focus { border-color: #10b981; }
+.fg-input[readonly] { color: #a5a3be; border-color: #b0b2c1; }
+.fg-signup .form-message { grid-column: 1 / -1; min-height: 22px; margin: 0 0 14px; font-size: 15px; }
+.fg-signup-btn { grid-column: 1 / -1; height: 75px; border: 1px solid #8b879d; border-radius: 5px; font-size: 40px; }
+
+/* 리뷰 작성 */
+.fg-wrap-write { padding-left: 57px; }
+.fg-write { margin-top: 35px; padding: 58px 74px 64px 84px; }
+.fg-write-row { display: grid; grid-template-columns: 393px 1fr; gap: 24px; }
+.fg-wlabel { display: block; margin-bottom: 22px; font-size: 14px; font-weight: 700; color: #586877; }
+.fg-winput { display: block; width: 100%; height: 45px; padding: 0 14px; background: #f1f5f9; border: 1px solid #e5eaf2; border-radius: 10px; font-size: 15px; font-weight: 700; color: #1e2940; outline: none; }
+.fg-winput::placeholder { color: #9aa3c7; }
+.fg-winput:focus { border-color: #10b981; }
+.fg-segment { display: grid; grid-template-columns: repeat(3, 111px); justify-content: space-between; }
+.fg-segment button { height: 45px; border-radius: 10px; background: #f1f5f9; color: #9aa3c7; font-size: 15px; font-weight: 700; }
+.fg-segment button.active { background: #10b981; color: white; }
+.fg-wblock { margin-top: 44px; }
+.fg-stars { display: flex; align-items: center; gap: 17px; margin-top: -9px; }
+.fg-stars button { width: 59px; height: 53px; color: #f59e0b; line-height: 0; }
+.fg-stars button.off { color: #e2e8f0; }
+.fg-stars svg { width: 59px; height: 53px; }
+.fg-star-text { margin-left: 18px; font-size: 14px; font-weight: 700; color: #586877; }
+.fg-wblock-tight { margin-top: 26px; }
+.fg-wblock-tight .fg-wlabel { margin-bottom: 18px; }
+.fg-wtextarea { height: 95px; padding: 10px 14px; resize: vertical; }
+.fg-write .form-message { min-height: 20px; margin: 10px 0; font-size: 13px; }
+.fg-write-actions { display: grid; grid-template-columns: 393px 392px; justify-content: space-between; }
+.fg-write-actions > * { height: 45px; display: flex; align-items: center; justify-content: center; border: 1px solid #e5eaf2; border-radius: 10px; font-size: 15px; font-weight: 700; }
+.fg-cancel { background: #f1f5f9; color: #1e2940; }
+.fg-cancel:hover { background: #e2e8f0; }
+.fg-submit { background: #10b981; color: white; }
+.fg-submit:hover { background: #059669; }
+
+/* 순위 */
+.fg-rank-list { margin: 44px 69px 0; display: grid; gap: 27px; }
+.fg-rank-status { margin: 44px 69px 0; padding: 24px; border-radius: 15px; background: white; color: #64748b; font-weight: 700; text-align: center; }
+.fg-rank { display: grid; grid-template-columns: 75px 1fr 128px; align-items: center; height: 120px; padding: 0 21px 0 32px; border: 1px solid #e2e8f0; border-radius: 15px; background: white; }
+.fg-rank-no { font-size: 36px; font-weight: 700; color: #475569; }
+.fg-rank-name { font-size: 32px; line-height: 38px; font-weight: 700; color: #2a2a2a; }
+.fg-rank-meta { margin-top: 12px; font-size: 12px; font-weight: 700; color: #586877; }
+.fg-rank-score { display: flex; align-items: center; justify-content: space-between; height: 72px; padding: 0 17px; border: 1px solid #fcf4ea; border-radius: 15px; background: #f1f5f9; color: #475569; font-size: 32px; font-weight: 700; }
+.fg-rank-score span { font-size: 28px; }
+.fg-rank-score b { font: inherit; }
+.fg-rank.gold { background: #fff9ec; border-color: #fce898; }
+.fg-rank.gold .fg-rank-no, .fg-rank.gold .fg-rank-score { color: #f7b026; }
+.fg-rank.gold .fg-rank-score { background: #fef3c7; }
+.fg-rank.silver { background: #f5f8fb; }
+.fg-rank.silver .fg-rank-score { background: #ebeff4; }
+.fg-rank.bronze { background: #fcf9f5; border-color: #ffedd5; }
+.fg-rank.bronze .fg-rank-no, .fg-rank.bronze .fg-rank-score { color: #ea580c; }
+.fg-rank.bronze .fg-rank-score { background: #fff7ed; }
+
+/* 검색 */
+.fg-search-page main { width: 1192px; max-width: 100%; }
+.fg-search-bar { display: flex; gap: 8px; width: 638px; max-width: 100%; margin-top: 20px; }
+.fg-search-field { position: relative; flex: 1; }
+.fg-search-field input { width: 100%; height: 50px; padding: 0 50px 0 19px; background: white; border: 1px solid #ebeff4; border-radius: 15px; font-size: 16px; font-weight: 700; color: #586877; outline: none; }
+.fg-search-field input::placeholder { color: #b0b7c5; }
+.fg-search-field input:focus { border-color: #10b981; }
+.fg-search-field svg { position: absolute; top: 13px; right: 10px; width: 24px; height: 24px; color: #94a3b8; pointer-events: none; }
+.fg-search-btn { flex: none; width: 80px; height: 50px; border-radius: 15px; background: #10b981; color: white; font-size: 16px; font-weight: 700; }
+.fg-search-btn:hover { background: #059669; }
+.fg-back-search { top: 202px; right: 195px; width: 65px; height: 57px; }
+.fg-result-head { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 127px; margin-top: 93px; padding: 20px 35px 20px 42px; background: #fff9ec; border: 1px solid #fce898; border-radius: 15px; }
+.fg-result-head h3 { font-size: 24px; line-height: 29px; font-weight: 700; color: #2a2a2a; }
+.fg-result-count { margin-top: 21px; font-size: 12px; font-weight: 700; color: #586877; }
+.fg-avg { flex: none; display: flex; align-items: center; gap: 10px; width: 202px; height: 72px; padding: 0 15px; background: white; border: 1px solid #fcf4ea; border-radius: 15px; }
+.fg-avg strong { font-family: "Instrument Sans", "Noto Sans KR", sans-serif; font-size: 32px; font-weight: 700; color: #f7b026; }
+.fg-avg .fg-meter { font-size: 16px; letter-spacing: 2px; }
+.fg-avg small { display: block; margin-top: 4px; font-size: 12px; font-weight: 700; color: #586877; }
+.fg-result-list { margin-top: 40px; display: grid; gap: 40px; }
+.fg-result { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 127px; padding: 20px 35px; background: white; border-radius: 30px; box-shadow: 0 4px 4px rgba(0, 0, 0, .25); }
+.fg-result-meta { display: block; font-size: 12px; font-weight: 700; color: #cfd0da; }
+.fg-result-menu { margin-top: 4px; font-size: 12px; font-weight: 700; color: #10b981; }
+.fg-result-name { margin-top: 2px; font-size: 13px; line-height: 1.5; font-weight: 700; color: #586877; word-break: break-all; }
+.fg-pill { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 30px; background: #fffbeb; color: #f59e0b; font-size: 12px; font-weight: 700; }
+.fg-pill .fg-meter { font-size: 15px; }
+.fg-meter { position: relative; display: inline-block; line-height: 1; white-space: nowrap; color: #e5e7eb; }
+.fg-meter::before { content: "★★★★★"; }
+.fg-meter > span { position: absolute; top: 0; left: 0; width: calc(var(--score) * 100%); overflow: hidden; color: #f59e0b; }
+
+@media (max-width: 1100px) {
+  .fg-wrap { padding: 40px 16px 60px; }
+  .fg-back, .fg-back-search { top: 32px; right: 16px; width: 52px; height: 48px; border-radius: 16px; }
+  .fg-back-in { top: 20px; right: 20px; }
+  .fg-login, .fg-signup, .fg-write { margin-top: 32px; padding: 24px 20px 28px; }
+  .fg-card-title { font-size: 32px; line-height: 40px; }
+  .fg-box-input, .fg-big-btn { height: 64px; font-size: 18px; padding: 0 18px; }
+  .fg-big-btn { font-size: 26px; }
+  .fg-check { font-size: 18px; gap: 14px; }
+  .fg-signup form, .fg-write-row, .fg-write-actions { grid-template-columns: 1fr; }
+  .fg-signup-btn { height: 60px; font-size: 26px; }
+  .fg-label, .fg-input { font-size: 16px; }
+  .fg-segment { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .fg-write-actions { gap: 10px; }
+  .fg-stars { gap: 6px; flex-wrap: wrap; }
+  .fg-stars button, .fg-stars svg { width: 40px; height: 38px; }
+  .fg-rank-list { margin: 32px 0 0; gap: 16px; }
+  .fg-rank { grid-template-columns: 52px 1fr 88px; height: auto; padding: 18px 14px; }
+  .fg-rank-no { font-size: 24px; }
+  .fg-rank-name { font-size: 20px; line-height: 26px; }
+  .fg-rank-score { height: 52px; font-size: 22px; padding: 0 10px; }
+  .fg-rank-score span { font-size: 18px; }
+  .fg-result-head { margin-top: 40px; padding: 24px; flex-wrap: wrap; }
+  .fg-result-count { margin-top: 10px; }
+  .fg-result-list { gap: 16px; margin-top: 20px; }
+  .fg-result { padding: 20px; border-radius: 20px; flex-wrap: wrap; }
 }

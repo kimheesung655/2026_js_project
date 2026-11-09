@@ -1,40 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>로그인 - 급식어때</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>로그인 - 급식어때</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap">
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="fg-page">
+<div class="fg-wrap fg-wrap-auth">
+    <header class="fg-head"><span class="fg-bar"></span><h1 class="fg-title">회원가입 &amp; 로그인</h1></header>
 
-<main class="login-container">
-    <header class="header-title">
-        <div class="green-bar"></div>
-        <h1>회원가입 & 로그인</h1>
-    </header>
-
-    <section class="login-card">
-        <h2>로그인</h2>
-
+    <main class="fg-card fg-login">
+        <h2 class="fg-card-title">로그인</h2>
         <form id="loginForm">
-            <div class="input-group">
-                <input type="text" id="userId" placeholder="아이디를 입력해주세요." required>
-            </div>
-
-            <div class="input-group">
-                <input type="password" id="password" placeholder="비밀번호를 입력해주세요." required>
-            </div>
-
-            <label class="remember-label">
+            <label class="fg-sr" for="email">이메일</label>
+            <input class="fg-box-input" type="email" id="email" placeholder="이메일을 입력해주세요." autocomplete="email" required>
+            <label class="fg-sr" for="password">비밀번호</label>
+            <input class="fg-box-input" type="password" id="password" minlength="6" placeholder="비밀번호를 입력해주세요." autocomplete="current-password" required>
+            <label class="fg-check">
                 <input type="checkbox" id="rememberLogin" checked>
-                <span>로그인 정보 저장</span>
+                <span class="fg-check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+                로그인 정보 저장
             </label>
-
-            <button type="submit" class="submit-btn">로그인</button>
-            <button type="button" class="signup-btn" onclick="location.href='signup.html'">회원가입</button>
+            <p class="form-message" id="formMessage"></p>
+            <button type="submit" class="fg-big-btn fg-primary">로그인</button>
+            <a href="signup.html" class="fg-big-btn fg-secondary">회원가입</a>
         </form>
-    </section>
-</main>
-
+    </main>
+</div>
+<script src="supabase.js"></script><script src="auth.js"></script>
 </body>
 </html>

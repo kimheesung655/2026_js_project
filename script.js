@@ -1,61 +1,70 @@
-// 1. 초기 더미 데이터
-let reviewData = [
-    {
-        id: 1,
-        menuName: "리코타치즈샐러드",
-        text: "치즈가 엄청 꾸덕꾸덕하고 발사믹 소스랑 잘 어울려요!",
-        rating: 4.0,
-        author: "2407 김희성",
-        time: "7분 전",
-        date: "2026-07-16 식사 이용",
-        createdAt: new Date("2026-07-16T12:00:00")
-    },
-    {
-        id: 2,
-        menuName: "랍스터테일구이",
-        text: "급식에 진짜 랍스터가 나오다니 영양사 선생님 최고입니다! 너무 맛있고 고급스러운 느낌이에요.",
-        rating: 5.0,
-        author: "2406 노가우",
-        time: "10분 전",
-        date: "2026-07-16 식사 이용",
-        createdAt: new Date("2026-07-16T11:53:00")
-    },
-    {
-        id: 3,
-        menuName: "바비큐폭립",
-        text: "고기가 부드럽고 양념이 잘 베어있어서 밥이랑 같이 먹기 딱 좋았습니다.",
-        rating: 4.5,
-        author: "2401 이영희",
-        time: "25분 전",
-        date: "2026-07-16 식사 이용",
-        createdAt: new Date("2026-07-16T11:38:00")
-    },
-    {
-        id: 4,
-        menuName: "치즈매쉬포테이토",
-        text: "치즈와 감자의 조합이 부드럽고 고소해서 사이드로 먹기 최고였어요.",
-        rating: 3.5,
-        author: "2410 박철수",
-        time: "1시간 전",
-        date: "2026-07-16 식사 이용",
-        createdAt: new Date("2026-07-16T11:00:00")
-    }
-];
-
-// 선택한 리뷰와 정렬 기준을 변수로 관리합니다.
+let reviewData = [];
 let selectedReviewId = null;
 let activeSort = "최신순";
+
+function reviewTime(value) {
+    const minutes = Math.floor((new Date().getTime() - new Date(value).getTime()) / 60000);
+    if (minutes < 1) return "방금 전";
+    if (minutes < 60) return minutes + "분 전";
+    if (minutes < 1440) return Math.floor(minutes / 60) + "시간 전";
+    return Math.floor(minutes / 1440) + "일 전";
+}
+
+function rowToReview(row) {
+    const profile = row.profiles || {};
+    const student = profile.student_number ? profile.student_number + " " : "";
+    return { id: row.id, userId: row.user_id, menuName: row.menu_name, text: row.content,
+        rating: Number(row.rating), author: student + (profile.name || "사용자"), time: reviewTime(row.created_at),
+        date: row.meal_date + " " + row.meal_type + " 이용", createdAt: new Date(row.created_at) };
+}
+
+function showPopularMenus(rows) {
+    const menus = [];
+    for (const row of rows) {
+        let menu = menus.find(item => item.menuName === row.menu_name);
+        if (!menu) {
+            menu = { menuName: row.menu_name, total: 0, count: 0, average: 0 };
+            menus.push(menu);
+        }
+        menu.total += Number(row.rating);
+        menu.count += 1;
+    }
+    for (const menu of menus) menu.average = menu.total / menu.count;
+    menus.sort(function (a, b) {
+        if (b.average !== a.average) return b.average - a.average;
+        if (b.count !== a.count) return b.count - a.count;
+        if (a.menuName < b.menuName) return -1;
+        if (a.menuName > b.menuName) return 1;
+        return 0;
+    });
+    for (let index = 0; index < 2; index += 1) {
+        const menu = menus[index];
+        document.getElementById("popularMenu" + index).textContent = menu ? (index + 1) + "위 " + menu.menuName : (index + 1) + "위 등록된 메뉴 없음";
+        document.getElementById("popularScore" + index).textContent = menu ? menu.average.toFixed(1) : "-";
+    }
+}
+
+function loadReviews() {
+    const fields = "id,user_id,menu_name,rating,content,meal_date,meal_type,created_at,profiles(name,student_number)";
+    supabaseRequest("/rest/v1/reviews?select=" + fields + "&order=created_at.desc", "GET", null, false, function (error, rows) {
+        if (error) {
+            reviewData = [];
+            renderReviews([]);
+            showPopularMenus([]);
+            return console.log("리뷰 불러오기 실패: " + error);
+        }
+        showPopularMenus(rows || []);
+        reviewData = (rows || []).map(rowToReview);
+        sortReviews(activeSort);
+    });
+}
 
 function sortReviews(sortType) {
     activeSort = sortType;
     const sorted = [...reviewData];
-    if (sortType === "별점 높은순") {
-        sorted.sort((a, b) => b.rating - a.rating);
-    } else if (sortType === "오래된 순") {
-        sorted.sort((a, b) => a.createdAt - b.createdAt);
-    } else {
-        sorted.sort((a, b) => b.createdAt - a.createdAt);
-    }
+    if (sortType === "별점 높은순") sorted.sort((a, b) => b.rating - a.rating);
+    else if (sortType === "오래된 순") sorted.sort((a, b) => a.createdAt - b.createdAt);
+    else sorted.sort((a, b) => b.createdAt - a.createdAt);
     renderReviews(sorted);
 }
 
@@ -68,13 +77,14 @@ function openModal(id) {
     document.getElementById("modalReviewContent").textContent = "“" + review.text + "”";
     document.getElementById("modalMealDate").textContent = review.date;
     document.getElementById("modalAuthor").textContent = "작성자: " + review.author;
+    const session = currentSession();
+    const mine = session && session.user && session.user.id === review.userId;
+    document.getElementById("editReviewBtn").hidden = !mine;
+    document.getElementById("deleteReviewBtn").hidden = !mine;
     document.getElementById("reviewModal").hidden = false;
 }
 
-function closeReviewModal() {
-    document.getElementById("reviewModal").hidden = true;
-    selectedReviewId = null;
-}
+function closeReviewModal() { document.getElementById("reviewModal").hidden = true; selectedReviewId = null; }
 
 function selectReviewSort(id, sortType, left, width) {
     document.getElementById("sortLatest").className = "text-wrapper-15 sort-btn";
@@ -86,75 +96,40 @@ function selectReviewSort(id, sortType, left, width) {
     sortReviews(sortType);
 }
 
-// id가 있는 요소를 선택하고 onclick에 함수를 넣습니다.
-document.getElementById("sortLatest").onclick = function () {
-    selectReviewSort("sortLatest", "최신순", 4, 56);
-};
-document.getElementById("sortRating").onclick = function () {
-    selectReviewSort("sortRating", "별점 높은순", 68, 83);
-};
-document.getElementById("sortOldest").onclick = function () {
-    selectReviewSort("sortOldest", "오래된 순", 145, 71);
-};
+document.getElementById("sortLatest").onclick = function () { selectReviewSort("sortLatest", "최신순", 4, 56); };
+document.getElementById("sortRating").onclick = function () { selectReviewSort("sortRating", "별점 높은순", 60, 84); };
+document.getElementById("sortOldest").onclick = function () { selectReviewSort("sortOldest", "오래된 순", 144, 72); };
 document.getElementById("closeModal").onclick = closeReviewModal;
 document.getElementById("reviewModalBackground").onclick = closeReviewModal;
 
 document.getElementById("deleteReviewBtn").onclick = function () {
-    if (selectedReviewId === null) return;
-    if (confirm("정말로 이 리뷰를 삭제하시겠습니까?")) {
-        reviewData = reviewData.filter(item => item.id !== selectedReviewId);
-        sortReviews(activeSort);
-        closeReviewModal();
-    }
+    if (selectedReviewId === null || !confirm("정말로 이 리뷰를 삭제하시겠습니까?")) return;
+    supabaseRequest("/rest/v1/reviews?id=eq." + selectedReviewId, "DELETE", null, true, function (error) {
+        if (error) return alert(error);
+        closeReviewModal(); loadReviews();
+    });
 };
 document.getElementById("editReviewBtn").onclick = function () {
     const review = reviewData.find(item => item.id === selectedReviewId);
     if (!review) return;
     const text = prompt("수정할 리뷰 내용을 입력하세요:", review.text);
-    if (text && text.trim() !== "") {
-        review.text = text.trim();
-        document.getElementById("modalReviewContent").textContent = "“" + review.text + "”";
-        sortReviews(activeSort);
-    }
-};
-document.getElementById("searchBtn").onclick = function () {
-    const keyword = prompt("검색할 메뉴 이름을 입력하세요:");
-    if (keyword) {
-        renderReviews(reviewData.filter(item => item.menuName.includes(keyword)));
-    }
-};
-document.getElementById("writeBtn").onclick = function () {
-    const menuName = prompt("메뉴 이름을 입력하세요:");
-    if (!menuName || menuName.trim() === "") return;
-    const text = prompt("리뷰 내용을 입력하세요:");
     if (!text || text.trim() === "") return;
-    const now = new Date();
-    reviewData.unshift({
-        id: now.getTime(),
-        menuName: menuName.trim(),
-        text: text.trim(),
-        rating: 5.0,
-        author: "2407 사용자",
-        time: "방금 전",
-        date: now.getFullYear() + "-" + (now.getMonth() + 1).toString().padStart(2, "0") +
-            "-" + now.getDate().toString().padStart(2, "0") + " 식사 이용",
-        createdAt: now
+    supabaseRequest("/rest/v1/reviews?id=eq." + selectedReviewId, "PATCH", { content: text.trim() }, true, function (error) {
+        if (error) return alert(error);
+        closeReviewModal(); loadReviews();
     });
-    selectReviewSort("sortLatest", "최신순", 4, 56);
-    alert("리뷰가 등록되었습니다!");
 };
-document.getElementById("rankBtn").onclick = function () {
-    alert("이번주 최고 인기 메뉴 순위:\n1위: 마라탕 (★ 4.9)\n2위: 치즈닭갈비 (★ 4.7)");
+document.getElementById("searchBtn").onclick = function () { location.href = "search.html"; };
+document.getElementById("writeBtn").onclick = function () {
+    if (!currentSession()) { alert("리뷰를 작성하려면 먼저 로그인해 주세요."); location.href = "login.html"; return; }
+    location.href = "write.html";
 };
+document.getElementById("rankBtn").onclick = function () { location.href = "rank.html"; };
 
-// 키보드로도 기존 버튼을 누를 수 있도록 합니다.
 const reviewButtonIds = ["sortLatest", "sortRating", "sortOldest", "searchBtn", "writeBtn", "rankBtn"];
 for (const id of reviewButtonIds) {
     const button = document.getElementById(id);
-    button.onkeydown = function (event) {
-        if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            button.onclick();
-        }
-    };
+    button.onkeydown = function (event) { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); button.onclick(); } };
 }
+
+loadReviews();
